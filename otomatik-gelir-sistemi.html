@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ek Gelir Akademi · Otomatik Gelir Sistemi: Kur, Optimize Et, Büyüt</title>
+<meta name="description" content="Ek Gelir Akademi — Otomatik Gelir Sistemi: Kur, Optimize Et, Büyüt. 10 bölümlük premium interaktif otomatik gelir eğitimi." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --ega-bg: #07070a;
+  --ega-bg-2: #0b0b10;
+  --ega-ink: #efe7d4;
+  --ega-ink-soft: #b8b3a4;
+  --ega-ink-muted: #7a7464;
+  --ega-line: rgba(212, 175, 55, 0.16);
+  --ega-line-strong: rgba(212, 175, 55, 0.32);
+  --ega-gold: #d4af37;
+  --ega-gold-soft: #e9c66b;
+  --ega-gold-deep: #a87f1c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--ega-bg); }
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+  color: var(--ega-ink);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+::selection { background: rgba(212,175,55,0.35); color: #fff; }
+button { font-family: inherit; cursor: pointer; }
+
+.ega-shell { position: relative; height: 100vh; width: 100vw; overflow: hidden; isolation: isolate; }
+.ega-bg-grain {
+  position: absolute; inset: 0; pointer-events: none; z-index: -2; opacity: .6;
+  background-image:
+    radial-gradient(rgba(212,175,55,0.04) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 4px 4px, 9px 9px;
+  background-position: 0 0, 2px 2px;
+}
+.ega-bg-glow {
+  position: absolute; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    radial-gradient(60% 50% at 12% 18%, rgba(212,175,55,0.10), transparent 60%),
+    radial-gradient(50% 40% at 88% 82%, rgba(168,127,28,0.08), transparent 60%),
+    linear-gradient(180deg, #07070a 0%, #050507 100%);
+}
+.ega-layout { display: grid; grid-template-columns: 320px 1fr; height: 100vh; }
+@media (max-width: 1024px) { .ega-layout { grid-template-columns: 1fr; } }
+
+.ega-topbar {
+  display: none; align-items: center; gap: 12px;
+  padding: 14px 18px; border-bottom: 1px solid var(--ega-line);
+  background: rgba(7,7,10,0.85); backdrop-filter: blur(14px);
+  position: sticky; top: 0; z-index: 30;
+}
+@media (max-width: 1024px) { .ega-topbar { display: flex; } }
+.ega-icon-btn {
+  width: 38px; height: 38px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 10px; border: 1px solid var(--ega-line);
+  background: rgba(255,255,255,0.02); color: var(--ega-ink);
+  transition: all .2s ease;
+}
+.ega-icon-btn:hover { border-color: var(--ega-line-strong); color: var(--ega-gold-soft); }
+.ega-brand-mini { display: flex; align-items: center; gap: 10px; }
+.ega-brand-mark {
+  font-family: "Fraunces", serif; font-weight: 600; letter-spacing: 0.18em; font-size: 14px;
+  background: linear-gradient(180deg, var(--ega-gold-soft), var(--ega-gold-deep));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ega-brand-name { font-size: 13px; color: var(--ega-ink-soft); letter-spacing: .04em; }
+.ega-progress-mini { flex:1; height:2px; background: rgba(212,175,55,0.10); border-radius:2px; overflow:hidden; }
+.ega-progress-mini-fill { height:100%; background: linear-gradient(90deg, var(--ega-gold-deep), var(--ega-gold-soft)); transition: width .5s ease; }
+
+.ega-sidebar {
+  height: 100vh; border-right: 1px solid var(--ega-line);
+  background: linear-gradient(180deg, rgba(212,175,55,0.04), transparent 30%), rgba(7,7,10,0.6);
+  backdrop-filter: blur(20px);
+  display: flex; flex-direction: column; position: relative; z-index: 20;
+}
+.ega-brand { padding: 28px 26px 22px; border-bottom: 1px solid var(--ega-line); position: relative; }
+.ega-brand::after {
+  content: ""; position: absolute; left: 26px; right: 26px; bottom: -1px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ega-gold), transparent); opacity: .5;
+}
+.ega-brand-eyebrow {
+  font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.32em;
+  color: var(--ega-gold-deep); text-transform: uppercase;
+}
+.ega-brand-title {
+  font-family: "Fraunces", serif; font-weight: 500; font-size: 28px; line-height: 1.05;
+  margin-top: 10px; letter-spacing: -0.01em; color: var(--ega-ink);
+}
+.ega-brand-title em {
+  font-style: italic;
+  background: linear-gradient(180deg, var(--ega-gold-soft), var(--ega-gold-deep));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ega-brand-sub { margin-top: 12px; font-size: 12.5px; color: var(--ega-ink-muted); line-height: 1.5; }
+.ega-nav { flex: 1; overflow-y: auto; padding: 16px 14px 24px; scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.25) transparent; }
+.ega-nav::-webkit-scrollbar { width: 6px; }
+.ega-nav::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.2); border-radius: 3px; }
+.ega-nav-label {
+  font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.28em;
+  color: var(--ega-ink-muted); padding: 6px 12px 14px; text-transform: uppercase;
+}
+.ega-nav-item {
+  width: 100%; display: grid; grid-template-columns: 32px 1fr; align-items: center; gap: 12px;
+  padding: 11px 12px; border-radius: 10px; background: transparent; border: 1px solid transparent;
+  color: var(--ega-ink-soft); text-align: left;
+  transition: background .25s, color .25s, border-color .25s; margin-bottom: 2px;
+}
+.ega-nav-item:hover { background: rgba(212,175,55,0.05); color: var(--ega-ink); }
+.ega-nav-item .num { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ega-ink-muted); }
+.ega-nav-item .label { font-size: 14px; line-height: 1.3; }
+.ega-nav-item.active {
+  background: linear-gradient(180deg, rgba(212,175,55,0.10), rgba(212,175,55,0.02));
+  border-color: var(--ega-line-strong); color: var(--ega-ink);
+}
+.ega-nav-item.active .num { color: var(--ega-gold-soft); }
+.ega-nav-item.active .label { color: #fff; }
+.ega-sidebar-foot {
+  padding: 18px 26px 22px; border-top: 1px solid var(--ega-line);
+  font-size: 11px; color: var(--ega-ink-muted); letter-spacing: 0.04em;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ega-sidebar-foot .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--ega-gold); box-shadow: 0 0 12px var(--ega-gold); }
+@media (max-width: 1024px) {
+  .ega-sidebar {
+    position: fixed; inset: 0 30% 0 0; height: 100vh; z-index: 40;
+    transform: translateX(-100%); transition: transform .3s ease;
+  }
+  .ega-sidebar.open { transform: translateX(0); }
+}
+
+.ega-main { position: relative; height: 100vh; display: flex; flex-direction: column; }
+.ega-progress-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(212,175,55,0.08); z-index: 10; }
+.ega-progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--ega-gold-deep), var(--ega-gold-soft), var(--ega-gold));
+  box-shadow: 0 0 14px var(--ega-gold); transition: width .5s cubic-bezier(.4,0,.2,1);
+}
+.ega-scroll { flex: 1; overflow-y: auto; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.2) transparent; }
+.ega-scroll::-webkit-scrollbar { width: 8px; }
+.ega-scroll::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.18); border-radius: 4px; }
+
+.ega-section { max-width: 1080px; margin: 0 auto; padding: 72px 56px 40px; animation: section-in .55s cubic-bezier(.2,.7,.2,1) both; }
+@media (max-width: 768px) { .ega-section { padding: 40px 22px 20px; } }
+@keyframes section-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.ega-section-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--ega-gold); margin-bottom: 18px;
+}
+.ega-section-eyebrow::before { content: ""; width: 36px; height: 1px; background: linear-gradient(90deg, transparent, var(--ega-gold)); }
+.ega-section-title {
+  font-family: "Fraunces", serif; font-weight: 400;
+  font-size: clamp(34px, 4vw, 54px); line-height: 1.04; letter-spacing: -0.02em; color: #fff; margin-bottom: 18px;
+}
+.ega-section-title em {
+  font-style: italic; font-weight: 500;
+  background: linear-gradient(180deg, #f3dca0 0%, var(--ega-gold) 60%, var(--ega-gold-deep) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ega-section-lead { font-size: 17px; line-height: 1.65; color: var(--ega-ink-soft); max-width: 780px; margin-bottom: 38px; }
+.ega-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--ega-line-strong), transparent); margin: 44px 0; }
+
+.ega-h3 {
+  font-family: "Fraunces", serif; font-weight: 500; font-size: 24px; line-height: 1.25;
+  letter-spacing: -0.01em; color: #fff; margin: 28px 0 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.ega-h3-bar { width: 4px; height: 22px; background: var(--ega-gold); border-radius: 2px; box-shadow: 0 0 12px rgba(212,175,55,0.6); }
+.ega-p { color: var(--ega-ink-soft); font-size: 15.5px; line-height: 1.7; margin: 0 0 14px; }
+.ega-p strong { color: var(--ega-ink); font-weight: 600; }
+.ega-p em { color: var(--ega-gold-soft); font-style: normal; }
+
+.ega-callout {
+  margin: 22px 0; padding: 22px 24px; border-radius: 14px;
+  background: linear-gradient(180deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02));
+  border: 1px solid var(--ega-line-strong); position: relative; overflow: hidden;
+}
+.ega-callout::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--ega-gold-soft), var(--ega-gold-deep));
+}
+.ega-callout-title {
+  font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--ega-gold); margin-bottom: 10px;
+}
+.ega-callout-body { color: var(--ega-ink); font-size: 15px; line-height: 1.65; }
+
+.ega-stats { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 24px 0; }
+.ega-stat {
+  padding: 22px; border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  border: 1px solid var(--ega-line);
+  transition: transform .3s, border-color .3s, background .3s;
+}
+.ega-stat:hover {
+  transform: translateY(-3px); border-color: var(--ega-line-strong);
+  background: linear-gradient(180deg, rgba(212,175,55,0.06), rgba(212,175,55,0.01));
+}
+.ega-stat-value {
+  font-family: "Fraunces", serif; font-weight: 500; font-size: 36px; line-height: 1;
+  background: linear-gradient(180deg, #f3dca0 0%, var(--ega-gold) 80%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ega-stat-label { margin-top: 10px; color: var(--ega-ink-soft); font-size: 13.5px; line-height: 1.4; }
+
+.ega-cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin: 22px 0; }
+.ega-card {
+  padding: 24px 22px; border-radius: 14px; border: 1px solid var(--ega-line);
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0));
+  transition: all .3s; position: relative; overflow: hidden;
+}
+.ega-card::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(120% 80% at 0% 0%, rgba(212,175,55,0.10), transparent 50%);
+  opacity: 0; transition: opacity .35s; pointer-events: none;
+}
+.ega-card:hover { border-color: var(--ega-line-strong); transform: translateY(-3px); }
+.ega-card:hover::before { opacity: 1; }
+.ega-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.ega-card-num {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--ega-line-strong); color: var(--ega-gold);
+  font-family: "JetBrains Mono", monospace; font-size: 12px;
+}
+.ega-card-title { font-family: "Fraunces", serif; font-weight: 500; font-size: 18px; color: #fff; }
+.ega-card-body { color: var(--ega-ink-soft); font-size: 14px; line-height: 1.6; }
+
+.ega-steps { margin: 24px 0; }
+.ega-step {
+  display: grid; grid-template-columns: 56px 1fr; gap: 18px;
+  padding: 20px 0; border-bottom: 1px solid var(--ega-line);
+}
+.ega-step:last-child { border-bottom: 0; }
+.ega-step-num {
+  font-family: "Fraunces", serif; font-size: 36px; line-height: 1; font-weight: 500;
+  background: linear-gradient(180deg, var(--ega-gold-soft), var(--ega-gold-deep));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ega-step-title { font-family: "Fraunces", serif; font-weight: 500; color: #fff; font-size: 18.5px; margin-bottom: 6px; }
+.ega-step-body { color: var(--ega-ink-soft); font-size: 14.5px; line-height: 1.65; }
+
+.ega-table { margin: 22px 0; border: 1px solid var(--ega-line); border-radius: 14px; overflow: hidden; }
+.ega-table-row { display: grid; align-items: stretch; }
+.ega-table-row > div {
+  padding: 14px 18px; border-right: 1px solid var(--ega-line);
+  font-size: 14px; color: var(--ega-ink-soft); line-height: 1.55;
+}
+.ega-table-row > div:last-child { border-right: 0; }
+.ega-table-row + .ega-table-row { border-top: 1px solid var(--ega-line); }
+.ega-table-head > div {
+  background: linear-gradient(180deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
+  color: var(--ega-gold-soft);
+  font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+}
+
+.ega-prosncons { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin: 22px 0; }
+@media (max-width: 768px) { .ega-prosncons { grid-template-columns: 1fr; } }
+.ega-pc { border: 1px solid var(--ega-line); border-radius: 14px; padding: 20px 22px; background: rgba(255,255,255,0.015); }
+.ega-pc-title {
+  font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ega-gold); margin-bottom: 12px;
+}
+.ega-pc.con .ega-pc-title { color: #c9826a; }
+.ega-pc ul { list-style: none; }
+.ega-pc li {
+  padding: 8px 0 8px 22px; position: relative;
+  color: var(--ega-ink-soft); font-size: 14px; line-height: 1.55;
+  border-bottom: 1px dashed rgba(212,175,55,0.08);
+}
+.ega-pc li:last-child { border-bottom: 0; }
+.ega-pc li::before {
+  content: ""; position: absolute; left: 4px; top: 16px;
+  width: 8px; height: 8px; border-radius: 2px;
+  background: var(--ega-gold); transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(212,175,55,0.5);
+}
+.ega-pc.con li::before { background: #c9826a; box-shadow: 0 0 8px rgba(201,130,106,0.4); }
+
+.ega-vaka {
+  margin: 26px 0; padding: 26px 28px; border-radius: 16px;
+  background: linear-gradient(180deg, rgba(212,175,55,0.04), transparent 80%), rgba(255,255,255,0.02);
+  border: 1px solid var(--ega-line);
+}
+.ega-vaka-label {
+  font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--ega-gold); margin-bottom: 14px;
+}
+.ega-vaka-title { font-family: "Fraunces", serif; font-weight: 500; font-size: 22px; color: #fff; margin-bottom: 14px; }
+.ega-vaka-grid { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 768px) { .ega-vaka-grid { grid-template-columns: 1fr; } }
+.ega-vaka-col h5 {
+  font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ega-gold-deep); margin-bottom: 8px;
+}
+.ega-vaka-col p { color: var(--ega-ink-soft); font-size: 14px; line-height: 1.6; }
+
+.ega-takeaways {
+  border: 1px solid var(--ega-line-strong); border-radius: 16px; padding: 26px 28px;
+  background: linear-gradient(180deg, rgba(212,175,55,0.06), rgba(212,175,55,0.01));
+  margin: 26px 0;
+}
+.ega-takeaways h4 {
+  font-family: "Fraunces", serif; font-weight: 500; font-size: 22px; color: #fff; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.ega-takeaways h4 .ega-h3-bar { width: 6px; height: 24px; }
+.ega-takeaways ol { list-style: none; counter-reset: tk; }
+.ega-takeaways li {
+  counter-increment: tk; padding: 12px 0 12px 44px; position: relative;
+  color: var(--ega-ink); font-size: 14.5px; line-height: 1.65;
+  border-bottom: 1px dashed rgba(212,175,55,0.10);
+}
+.ega-takeaways li:last-child { border-bottom: 0; }
+.ega-takeaways li::before {
+  content: counter(tk, decimal-leading-zero);
+  position: absolute; left: 0; top: 11px;
+  font-family: "JetBrains Mono", monospace; font-size: 12px;
+  color: var(--ega-gold); letter-spacing: 0.04em;
+}
+
+.ega-hero { padding: 64px 56px 60px; max-width: 1080px; margin: 0 auto; }
+@media (max-width: 768px) { .ega-hero { padding: 40px 22px 30px; } }
+.ega-hero-mark {
+  font-family: "JetBrains Mono", monospace; letter-spacing: 0.36em; color: var(--ega-gold);
+  font-size: 11px; text-transform: uppercase; margin-bottom: 22px;
+}
+.ega-hero-title {
+  font-family: "Fraunces", serif; font-weight: 300;
+  font-size: clamp(48px, 7vw, 88px); line-height: 0.98; letter-spacing: -0.035em; color: #fff;
+}
+.ega-hero-title em {
+  font-style: italic; font-weight: 400;
+  background: linear-gradient(180deg, #f3dca0 0%, var(--ega-gold) 50%, var(--ega-gold-deep) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ega-hero-sub { font-size: 18px; line-height: 1.6; color: var(--ega-ink-soft); max-width: 720px; margin-top: 28px; }
+.ega-hero-meta {
+  margin-top: 36px; display: flex; flex-wrap: wrap; gap: 28px;
+  font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ega-ink-muted);
+}
+.ega-hero-meta span strong { color: var(--ega-gold-soft); font-weight: 500; }
+.ega-hero-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--ega-line-strong), transparent); margin: 44px 0; }
+.ega-toc { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 12px; }
+.ega-toc-item {
+  display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: center;
+  padding: 14px 16px; border-radius: 12px; border: 1px solid var(--ega-line);
+  background: rgba(255,255,255,0.02); transition: all .25s;
+}
+.ega-toc-item:hover {
+  border-color: var(--ega-line-strong);
+  background: linear-gradient(180deg, rgba(212,175,55,0.06), rgba(212,175,55,0));
+  transform: translateY(-2px);
+}
+.ega-toc-num { color: var(--ega-gold); font-family: "JetBrains Mono", monospace; font-size: 12px; }
+.ega-toc-label { color: var(--ega-ink); font-size: 14.5px; font-weight: 500; }
+
+.ega-pager {
+  max-width: 1080px; margin: 30px auto 0; padding: 0 56px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px;
+}
+@media (max-width: 768px) { .ega-pager { padding: 0 22px; } }
+.ega-pager-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 18px; border-radius: 12px; border: 1px solid var(--ega-line);
+  background: rgba(255,255,255,0.02); color: var(--ega-ink-soft);
+  font-size: 13.5px; transition: all .25s;
+}
+.ega-pager-btn:hover:not(:disabled) {
+  border-color: var(--ega-line-strong);
+  background: linear-gradient(180deg, rgba(212,175,55,0.06), rgba(212,175,55,0));
+  color: #fff;
+}
+.ega-pager-btn:disabled { opacity: .35; cursor: not-allowed; }
+.ega-pager-next { justify-self: end; }
+.ega-pager-count { font-family: "JetBrains Mono", monospace; color: var(--ega-gold-soft); font-size: 12px; letter-spacing: 0.16em; }
+
+.ega-footer {
+  max-width: 1080px; margin: 60px auto 40px; padding: 0 56px;
+  text-align: center; color: var(--ega-ink-muted); font-size: 12px; letter-spacing: 0.08em;
+}
+.ega-foot-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--ega-line-strong), transparent); margin-bottom: 22px; }
+.ega-foot-mark {
+  background: linear-gradient(180deg, var(--ega-gold-soft), var(--ega-gold-deep));
+  -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 600;
+}
+.ega-foot-sep { margin: 0 10px; opacity: .6; }
+.ega-foot-sub { margin-top: 8px; opacity: 0.7; }
+</style>
+</head>
+<body>
+<div class="ega-shell">
+  <div class="ega-bg-grain"></div>
+  <div class="ega-bg-glow"></div>
+
+  <header class="ega-topbar">
+    <button class="ega-icon-btn" id="menuToggle" aria-label="Menü">☰</button>
+    <div class="ega-brand-mini">
+      <span class="ega-brand-mark">EGA</span>
+      <span class="ega-brand-name">Ek Gelir Akademi</span>
+    </div>
+    <div class="ega-progress-mini"><div class="ega-progress-mini-fill" id="progressMini"></div></div>
+  </header>
+
+  <div class="ega-layout">
+    <aside class="ega-sidebar" id="sidebar">
+      <div class="ega-brand">
+        <div class="ega-brand-eyebrow">Premium Sunum</div>
+        <h1 class="ega-brand-title">Ek Gelir <em>Akademi</em></h1>
+        <p class="ega-brand-sub">Otomatik Gelir Sistemi: Kur, Optimize Et, Büyüt. 10 bölümlük interaktif otomatik gelir çalışması.</p>
+      </div>
+      <nav class="ega-nav" id="nav" aria-label="Bölümler">
+        <div class="ega-nav-label">Bölümler</div>
+      </nav>
+      <div class="ega-sidebar-foot"><span>Edisyon · 2026</span><span class="dot"></span></div>
+    </aside>
+
+    <main class="ega-main">
+      <div class="ega-progress-bar"><div class="ega-progress-fill" id="progressFill"></div></div>
+      <div class="ega-scroll" id="scroll">
+        <div id="sectionContainer"></div>
+        <nav class="ega-pager">
+          <button class="ega-pager-btn" id="prevBtn">‹ <span id="prevLabel">Başlangıç</span></button>
+          <div class="ega-pager-count" id="pagerCount">01 / 13</div>
+          <button class="ega-pager-btn ega-pager-next" id="nextBtn"><span id="nextLabel">Sonraki</span> ›</button>
+        </nav>
+        <footer class="ega-footer">
+          <div class="ega-foot-rule"></div>
+          <p>
+            <span class="ega-foot-mark">Ek Gelir Akademi</span>
+            <span class="ega-foot-sep">·</span>
+            Otomatik Gelir Sistemi: Kur, Optimize Et, Büyüt · Premium Sunum Serisi
+          </p>
+          <p class="ega-foot-sub">Bu sunum eğitim ve bilgilendirme amaçlıdır.</p>
+        </footer>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+/* ============ İçerik ============ */
+const SECTIONS = [
+  {
+    id: "intro", shortTitle: "Açılış", hero: true,
+    toc: [
+      "Otomatik Gelir Zihniyeti · Zamanı Çöz",
+      "Gelir Modeli Seçimi · 6 Kanal",
+      "Niş ve Değer Vaadi · Kime, Neyi",
+      "Ürün Kurgusu · MVP'den Değer Merdivenine",
+      "Otomatik Satış Hunisi · A'dan Ödemeye",
+      "Trafik Motorları · SEO, Sosyal, Reklam",
+      "E-mail Otomasyonu · Uyurken Satış",
+      "Ödeme, Teslimat ve Sistem Kalbi",
+      "Optimizasyon · A/B, Metrikler, Dönüşüm",
+      "Ölçekleme · Ekipsiz Büyüme ve LTV"
+    ]
+  },
+
+  /* 1 */
+  { id:"zihniyet", shortTitle:"Otomatik Gelir Zihniyeti",
+    title:'Otomatik Gelir <em>Zihniyeti</em> · Zamanı Çöz',
+    lead:"Aktif gelirde saat başına para kazanırsınız; otomatik gelirde sistem başına para kazanırsınız. İkisi arasındaki fark 'daha çok çalışmak' değil, 'çalışmayı bir kez kurup tekrar tekrar sattırmak'tır. Bu bölüm, para ile zaman arasındaki bağı kıran zihinsel temeli kurar.",
+    blocks:[
+      { type:"h", text:"Zaman ≠ Para · Model Değişimi" },
+      { type:"p", text:"Klasik iş modelinde <strong>zaman satarsınız</strong>: 1 saat = X para. Otomatik gelir modelinde <em>bir kez üretim + sonsuz teslimat</em> denklemi vardır. Yazdığınız e-kitap, çektiğiniz kurs, kurduğunuz abonelik sistemi — biri satın alsa da, bin kişi satın alsa da üretim maliyeti sabittir. Bu, geliri zamandan koparan tek gerçek yol." },
+      { type:"callout", title:"Kural · Uyurken Satan İş", text:"Warren Buffett: <strong>'Uyurken para kazanmanın bir yolunu bulamazsan ölene kadar çalışırsın.'</strong> Otomatik gelir sistemi bir 'lüks' değil; sürdürülebilir finansal özgürlüğün matematiksel zorunluluğudur." },
+      { type:"h", text:"3 Gelir Türü · Nerede Duruyorsun?" },
+      { type:"table",
+        headers:["Tür","Nasıl Kazanılır","Ölçek Sınırı","Örnek"],
+        rows:[
+          ["Aktif","Zaman × Ücret","24 saat/gün","Maaş, freelance saat ücreti"],
+          ["Yarı-Otomatik","Bir kere kurulur + minimum bakım","Ekip / süreç","Danışmanlık paketi, ajans"],
+          ["Otomatik","Bir kere kur, sistem satar","Sonsuz","Dijital ürün, abonelik, telif"]
+        ]
+      },
+      { type:"h", text:"Otomatik Gelirin 4 Bileşeni" },
+      { type:"cards", items:[
+        { title:"Ürün", body:"Bir kez üretilen, tekrar tekrar satılabilen değer paketi." },
+        { title:"Trafik", body:"Ürüne sürekli akan potansiyel alıcı akışı (SEO, sosyal, reklam)." },
+        { title:"Huni", body:"Ziyaretçiyi otomatik satın alan müşteriye çeviren süreç." },
+        { title:"Sistem", body:"Ödeme, teslimat, destek — insan müdahalesi olmadan çalışan altyapı." }
+      ]},
+      { type:"p", text:"Bu 4 bileşenden biri eksik olduğunda 'otomatik gelir' yalan olur. Ürün olmadan trafik boşa akar, trafik olmadan ürün depoda kalır, huni olmadan trafik satışa dönmez, sistem olmadan huni sizi manuel operasyona hapseder." },
+      { type:"h", text:"Pasif Gelir · Efsaneler ve Gerçekler" },
+      { type:"prosncons",
+        pros:["Sistem bir kez kurulunca ölçeklenebilir","Zaman ile gelir arasındaki bağ zayıflar","Coğrafi bağımsızlık; her yerden çalışılır","Hasta ya da tatilde bile sistem satmaya devam eder","Ürün başına marj yüksek olur"],
+        cons:["'Pasif' asla tam pasif değil — bakım ve güncelleme şart","İlk kurulum en az 3-6 ay yoğun aktif çalışma ister","Yanlış ürün / niş seçimi tüm yatırımı boşa yakar","Trafik kaynağı değişince sistem sarsılır","Yasal, vergi, teknik yükümlülükler manuelden fazladır"]
+      },
+      { type:"h", text:"Gelir Yolculuğu · Kaç Aylık Bir Süreç?" },
+      { type:"steps", items:[
+        { title:"Ay 1-2 · Zemin", body:"Niş seçimi, avatar, ilk 20 içerik. Gelir yok, öğrenme yoğun." },
+        { title:"Ay 3-4 · İlk Ürün", body:"MVP dijital ürün + ilk landing sayfa. Aylık 5-15 satış." },
+        { title:"Ay 5-6 · Huni", body:"E-mail dizisi + lead magnet + otomatik satış. Aylık 30-80 satış." },
+        { title:"Ay 7-9 · Trafik Motoru", body:"SEO + sosyal medya rutini + reklam testi. İki katına ölçek." },
+        { title:"Ay 10-12 · Optimizasyon", body:"A/B, ürün merdiveni, retargeting. Marj artışı." },
+        { title:"Ay 12+ · Ölçek", body:"Ekip, otomasyon, yeni ürünler. Ölçekleme dönemi başlar." }
+      ]},
+      { type:"stats", items:[
+        { value:"6-12 ay", label:"Otomatik gelir sisteminin oturma süresi (gerçekçi)" },
+        { value:"%80", label:"İlk 3 ayda pes edenlerin oranı" },
+        { value:"90.10", label:"Kural: Sistem kuran %10, işine devam eden %90" },
+        { value:"4×", label:"12 aylık sistem, ilk 6 aylık sisteme kıyasla üretkenlik farkı" }
+      ]},
+      { type:"callout", title:"Uyarı · Hızlı Zenginlik Değil", text:"Bu eğitim <strong>'ayda 100.000 TL 30 günde'</strong> vaadi vermez. Otomatik gelir sistemi tarım gibidir: doğru toprağı seçer, tohumu eker, sabırla sular, hasat alırsın. İlk 3-6 ay meyve göremezsen bu 'başarısızlık' değil, 'doğal süreç'tir." },
+      { type:"vaka",
+        title:"Yazılım Mühendisi · Notion Şablonu ile Aylık 32.000 TL",
+        baglam:"Full-time yazılımcı, iş yoğunluğundan bunalmış, 2. gelir arayışında. Freelance denemiş — zaman kısıtlı. 'Bir kez üret, bin kez sat' fikri sadece teori.",
+        analiz:"Kendi kullandığı Notion proje şablonunu paketleyip Gumroad'a koydu. 30 TL fiyat, İngilizce satış sayfası, LinkedIn ve Twitter'da 3 içerik/hafta. İlk ay 12 satış. 4. ay: iki ürün, 3'ünde bundle, e-mail listesi 2.400 kişi. 8. ay: aylık ortalama 1.100 satış.",
+        sonuc:"12. ayda: aylık gelir 32.000 TL, haftalık 4-5 saat bakım. Ürün pasif; içerik ve e-mail zincir otomatik. <em>Aktif işini bırakmadan</em> otomatik gelir sistemi kurdu. Anahtar: küçük başladı, sürekli iyileştirdi."
+      },
+      { type:"takeaways", items:[
+        "Otomatik gelir 'zamanla para bağını' kırar; aktif gelir kıramaz.",
+        "4 bileşen: Ürün + Trafik + Huni + Sistem — biri eksikse çalışmaz.",
+        "'Pasif' asla tam pasif değil; bakım, güncelleme ve trafik daima gerekir.",
+        "Gerçekçi süre 6-12 ay; ilk 3 ayda %80 pes eder — sistem sabır ister.",
+        "Hızlı zenginlik vaadi vermeyen, sürdürülebilir bir kanaldır."
+      ]}
+    ]
+  },
+
+  /* 2 */
+  { id:"model", shortTitle:"Gelir Modeli Seçimi",
+    title:'Gelir <em>Modeli</em> Seçimi · 6 Kanal',
+    lead:"Yanlış model seçimi 12 ayınızı yakar. Her modelin farklı hız, farklı yatırım, farklı beceri profili vardır. Sizinle uyumlu tek bir model bulmak, üç modeli yarım yamalak denemekten her zaman daha güçlüdür.",
+    blocks:[
+      { type:"h", text:"Hangi Model Sizi Zenginleştirir?" },
+      { type:"p", text:"Otomatik gelir sistemleri tek bir formda değildir. 6 ana kanal vardır ve her biri farklı beceri, farklı zaman ve farklı sermaye ister. Doğru seçim, mevcut becerileriniz + tutkunuz + pazar talebi üçgeninin kesişimindedir. <strong>'Popüler olan' değil, 'size uyan'</strong> model kazandırır." },
+      { type:"h", text:"6 Otomatik Gelir Kanalı" },
+      { type:"cards", items:[
+        { title:"Dijital Ürün", body:"E-kitap, şablon, kontrol listesi, dijital baskı. Kurulum kolay, marj %90+." },
+        { title:"Online Kurs", body:"Video eğitim, community, sertifika. Ortalama fiyat yüksek, ölçek büyük." },
+        { title:"Abonelik / Membership", body:"Aylık ücret karşılığı sürekli değer. Tekrar gelir + öngörülebilir kâr." },
+        { title:"Affiliate / Ortaklık", body:"Başkasının ürününü satar, komisyon alırsın. Sıfır ürün riski." },
+        { title:"Reklam / Sponsorluk", body:"İçerik trafik alır, reklam ya da sponsorluk gelir. Ölçek trafiğe bağlı." },
+        { title:"Kaynak Havuzu (Print-on-demand, Stock)", body:"Fotoğraf, tasarım, müzik, POD ürün — bir kere yükle, tekrar sat." }
+      ]},
+      { type:"h", text:"6 Kanal · Yatırım vs Getiri" },
+      { type:"table",
+        headers:["Model","Kurulum Süresi","Başlangıç Bütçesi","Ölçek Potansiyeli","Marj"],
+        rows:[
+          ["Dijital Ürün","2-6 hafta","0-1.500 TL","Yüksek","%85-95"],
+          ["Online Kurs","2-4 ay","1.500-15.000 TL","Çok Yüksek","%80-90"],
+          ["Abonelik","3-6 ay","2.500-25.000 TL","Çok Yüksek","%70-85"],
+          ["Affiliate","2-8 hafta","0-500 TL","Orta","%20-50 komisyon"],
+          ["Reklam / Sponsor","6-18 ay","0-3.000 TL","Trafiğe Bağlı","Değişken"],
+          ["Kaynak Havuzu","4-12 hafta","500-5.000 TL","Orta","%50-80"]
+        ]
+      },
+      { type:"h", text:"Kişisel Uyum Testi · 4 Boyut" },
+      { type:"steps", items:[
+        { title:"Beceri Envanteri", body:"Ne biliyorsun? Ne yaparken zaman uçuşuyor?" },
+        { title:"Pazar Talebi", body:"Bu beceri için ödeyecek insan var mı? Google trend, forum, DM sorguları?" },
+        { title:"Kişisel Ritim", body:"Hızlı üretim mi seversin (dijital ürün) yoksa uzun ilişki mi (kurs)?" },
+        { title:"Bütçe ve Süre", body:"Hangi modele hem para hem zaman ayırabilirsin, gerçekçi ol." }
+      ]},
+      { type:"callout", title:"3 Kural · Model Seçimi", text:"1) Aynı anda birden çok modele başlama. 2) 6-12 ay boyunca <strong>tek bir modele</strong> odaklan. 3) O modelde ilk 500 satışı yapmadan yeni bir kanal ekleme. Odak, otomatik gelirin en pahalı silahıdır." },
+      { type:"h", text:"Yeni Başlayan İçin 3 Uyumlu Kombinasyon" },
+      { type:"cards", items:[
+        { title:"Uzmanlık Yolu", body:"Dijital ürün (e-kitap, şablon) + Affiliate (araç önerisi). Düşük risk, hızlı başlangıç." },
+        { title:"Eğitmen Yolu", body:"Online kurs + Abonelik topluluğu. Yüksek fiyat, sadık kitle." },
+        { title:"Yaratıcı Yolu", body:"Kaynak havuzu (POD, tasarım) + Instagram reklam geliri. Görsel becerili için." }
+      ]},
+      { type:"h", text:"Yanlış Model Seçme Belirtileri" },
+      { type:"prosncons",
+        pros:["3 ay içinde ilk 10 satışı görmek","İçerik üretirken enerji artması","Müşteriden yeni fikir çıkması","Ürün fiyatını korkmadan artırabilmek"],
+        cons:["6 ay boyunca sıfır satış","İçerik üretmek gittikçe ağırlaşmak","Sürekli yeni model peşinde koşmak","Fiyat sormaktan çekinmek, sürekli indirim"]
+      },
+      { type:"vaka",
+        title:"Grafik Tasarımcı · Yanlış Modelden Doğrusuna Geçiş",
+        baglam:"Grafik tasarımcı 4 ay online kurs kurmaya çalıştı. Video çekim zor geldi, kayıtlar aylarca sürdü, sonuçta 3 satış yapabildi. Motivasyon kırıldı.",
+        analiz:"Model gözden geçirildi: video yapımını sevmiyor, tasarım paketi hazırlamayı seviyor. Kurs bırakıldı, 'Sosyal medya için 200 tasarım şablonu' paketi 6 haftada hazırlandı. Etsy + Gumroad + kendi landing sayfası açıldı.",
+        sonuc:"3 ay sonra: aylık 220 satış, 550 TL ortalama sepet, sıfır video, 15 saat/hafta bakım. <em>Beceriyle uyumlu model</em> aynı kişiyi 30 kata çıkardı."
+      },
+      { type:"takeaways", items:[
+        "6 kanal var: dijital ürün, kurs, abonelik, affiliate, reklam, kaynak havuzu.",
+        "Hızlı başlangıç için dijital ürün + affiliate; uzun ölçek için kurs + abonelik.",
+        "Beceri + tutku + pazar talebi kesişimindeki model kazandırır.",
+        "Aynı anda birden çok modele başlamak = hepsinde başarısız olmak.",
+        "6 ayda sıfır satış modelin yanlış olduğunun en net sinyalidir."
+      ]}
+    ]
+  },
+
+  /* 3 */
+  { id:"nis", shortTitle:"Niş ve Değer Vaadi",
+    title:'Niş ve <em>Değer Vaadi</em> · Kime, Neyi',
+    lead:"Herkese hizmet eden hiç kimseye değer yaratmaz. Otomatik gelir sistemlerinin %70'i geniş niş yüzünden çöker. Doğru daralma; küçük bir kitleyi büyük bir kazanca çevirir — 'niş' aslında 'zenginlik alanı'dır.",
+    blocks:[
+      { type:"h", text:"Niş Neden Zenginleştirir?" },
+      { type:"p", text:"Geniş bir konu (örn. 'kişisel gelişim') milyonlarca içerik ve binlerce yarışmacı içerir. Aynı konuyu <strong>'ofis çalışanları için 15 dakikada odaklanma'</strong> olarak daraltırsanız — rakip azalır, arama hedefi netleşir, hedef kitle 'bu bana yazılmış' der. Niş, otomatik gelirin görünmez levhasıdır." },
+      { type:"callout", title:"Denklem", text:"<strong>Kime × Neyi × Nasıl Sonuç = Değer Vaadi.</strong> Üçünden biri boşsa vaad yoktur. Vaad olmadan ürün soğuk, huni etkisiz, trafik boşa akar." },
+      { type:"h", text:"Niş Daraltma · 3 Boyut" },
+      { type:"cards", items:[
+        { title:"Kim (Kitle)", body:"Yaş, meslek, yaşam evresi, sorunun aciliyeti." },
+        { title:"Ne (Konu)", body:"Genel alan içinde tek bir kalıcı sorun / arzu." },
+        { title:"Nasıl (Sonuç)", body:"Somut, ölçülebilir dönüşüm: 'X süreyi Y'e indir', 'Z kadar kazan'." }
+      ]},
+      { type:"h", text:"Niş Formülü · Örnekler" },
+      { type:"table",
+        headers:["Zayıf Vaad","Güçlü Vaad","Fark"],
+        rows:[
+          ["Sağlıklı yaşam blogu","Ofis çalışanları için 15 dk masaüstü egzersiz","Kitle + zaman"],
+          ["Kişisel gelişim eğitmeni","Yeni yönetici olanlar için ilk 90 gün rehberi","Yaşam evresi"],
+          ["Yemek tarifleri","Diyabetli ebeveynler için haftalık menü","Sağlık + rutin"],
+          ["Freelance koçluğu","Türkiye'deki tasarımcılar için ilk 3 yurtdışı müşteri","Meslek + coğrafya"],
+          ["İngilizce kursu","IT mühendislerinin mülakat İngilizcesi","Meslek + amaç"]
+        ]
+      },
+      { type:"h", text:"Değer Vaadi (UVP) Yazma Şablonu" },
+      { type:"steps", items:[
+        { title:"[Kime]", body:"'Uzaktan çalışan mühendislere'" },
+        { title:"[Hangi Sorunu Yaşayan]", body:"'sürekli toplantı yorgunluğu yaşayan'" },
+        { title:"[Ne Vaad Ediyorsun]", body:"'2 hafta içinde toplantı sayısını yarıya indiren'" },
+        { title:"[Nasıl / Farkın Ne]", body:"'kanıtlanmış 5 çerçeveyi'" },
+        { title:"[Sonuç]", body:"'öğreten mini kurs.'" }
+      ]},
+      { type:"p", text:"Tam cümle: 'Uzaktan çalışan mühendislere, toplantı yorgunluğunu 2 haftada yarıya indiren, kanıtlanmış 5 çerçeveyi öğreten mini kurs.' <em>Bu cümle olmadan tek bir sayfa yazma</em>." },
+      { type:"h", text:"Talep Doğrulama · 5 Kanal" },
+      { type:"cards", items:[
+        { title:"Google Trends", body:"Konu popülerliği, mevsimsellik, yükseliş sinyali." },
+        { title:"Reddit / Ekşi", body:"Gerçek insanlar hangi sorunu yazıyor? Dil ve tonu buradan al." },
+        { title:"Amazon / Idefix Yorumları", body:"Var olan çözümlerin eksikleri — sen boşluğu doldur." },
+        { title:"AnswerThePublic", body:"Konu etrafındaki 100+ soru; içerik takvimi hazır çıkar." },
+        { title:"Rakip Analizi", body:"Aynı nişte ne satılıyor, hangi fiyattan, hangi yorumlarla?" }
+      ]},
+      { type:"h", text:"Ödeyecek Kitle Testi · 3 Sinyal" },
+      { type:"steps", items:[
+        { title:"Var Olan Ürün Sinyali", body:"Aynı problemi çözen ücretli ürünler var mı? YOKSA 'kimse ödemiyor' olabilir." },
+        { title:"Duyulan Acı Sinyali", body:"Kişiler bu sorunu yüksek sesle şikayet ediyor mu? Forumlar, DM'ler, konuşmalar." },
+        { title:"Ödeme Kabiliyeti Sinyali", body:"Kitlenin geliri, ödemeyi kaldıracak seviyede mi? 'Öğrenci nişi' düşük, 'B2B karar verici' yüksek." }
+      ]},
+      { type:"callout", title:"Kural · Kâra Yakın Niş", text:"Ödeme yapan nişler 3 kategoride yoğunlaşır: <strong>Sağlık, Zenginlik, İlişkiler</strong>. Bu üç ana yolun altındaki alt nişler (ör. 'girişimci baba için verimlilik' = zenginlik + ilişki) klasik olarak en yüksek dönüşüm veren alanlardır." },
+      { type:"vaka",
+        title:"Diyetisyen · Genel Nişten 'Vardiyalı Hemşire' Nişine",
+        baglam:"Diyetisyen 2 yıl 'sağlıklı yaşam' konusunda blog + Instagram büyüttü. 8.000 takipçi, ayda 3-4 danışan.",
+        analiz:"Kitle analizinde takipçilerin %38'inin sağlık çalışanı olduğu görüldü. Odak 'vardiyalı hemşireler için beslenme'ye kaydırıldı. Değer vaadi: 'Gece vardiyasında kilo almadan enerjik kalma sistemi'. Ürün: 8 haftalık dijital rehber + WhatsApp destek.",
+        sonuc:"6 ayda: takipçi 8.000 → 11.500, aylık ürün satışı 8'den 62'ye çıktı. Ortalama sepet 240 TL yerine 890 TL. Aynı kişi, aynı beceri — <em>dar niş 12 katı gelir</em> getirdi."
+      },
+      { type:"takeaways", items:[
+        "Niş = daralma değil; ödeyecek kitleye doğru odaklanma.",
+        "Değer vaadi formülü: Kime × Hangi Sorun × Ne Sonuç × Nasıl.",
+        "5 kanaldan talep doğrulaması yapılmadan ürün üretilmemeli.",
+        "3 en kârlı ana niş: Sağlık, Zenginlik, İlişkiler.",
+        "'Bu bana yazılmış' hissi otomatik satışın en güçlü tetiğidir."
+      ]}
+    ]
+  },
+
+  /* 4 */
+  { id:"urun", shortTitle:"Ürün Kurgusu",
+    title:'Ürün Kurgusu · <em>MVP\'den</em> Değer Merdivenine',
+    lead:"En büyük başarısızlık nedeni fazla bitirilmiş ürün: 6 ay hazırlanır, çıkar, kimse almaz. Otomatik gelir sistemleri MVP mantığıyla kurulur — küçük, hızlı, geribildirim odaklı. Sonra üstüne değer merdiveni kurulur.",
+    blocks:[
+      { type:"h", text:"MVP · Minimum Değer Ürünü" },
+      { type:"p", text:"MVP (Minimum Viable Product) sizin en iyi ürününüz değildir — sadece <strong>satılabilir en küçük hali</strong>dir. Amaç mükemmelleşmek değil; pazarın tepkisini erken toplamak. 40 saatte biten bir MVP'nin öğrettiği, 400 saatte biten mükemmel ürünün öğrettiğinden fazladır." },
+      { type:"callout", title:"Kural · Utanılacak Sürüm", text:"Reid Hoffman: <strong>'İlk versiyondan utanmıyorsanız çok geç çıkarmışsınız demektir.'</strong> MVP'niz sonraki 10 versiyonun yalnızca ilki olduğu için hafif, hızlı ve odaklı olmak zorundadır." },
+      { type:"h", text:"6 MVP Ürün Türü · Hızdan Güce" },
+      { type:"cards", items:[
+        { title:"Kontrol Listesi (Checklist)", body:"1-3 sayfa PDF. 30 dakika üretim. Fiyat: 30-90 TL. Etki: liste + e-mail." },
+        { title:"E-Kitap / Rehber", body:"15-40 sayfa PDF. 2-4 gün. Fiyat: 90-350 TL. Etki: otorite kanıtı." },
+        { title:"Şablon / Template", body:"Notion, Excel, Canva, Figma. 1-2 hafta. Fiyat: 150-800 TL." },
+        { title:"Mini Kurs", body:"3-6 video. 2-4 hafta. Fiyat: 350-1.500 TL. Etki: derin öğretim." },
+        { title:"Ana Kurs", body:"20+ ders + community. 2-4 ay. Fiyat: 1.500-9.000 TL. Etki: dönüşüm." },
+        { title:"Abonelik / Membership", body:"Süreklilik. 3-6 ay kurulum. Fiyat: aylık 60-800 TL. Etki: tekrar gelir." }
+      ]},
+      { type:"h", text:"MVP Doğrulama · Satmadan Önce Sat" },
+      { type:"steps", items:[
+        { title:"Ön Satış Sayfası", body:"Ürün henüz yok — sadece satış sayfası. Ziyaretçi ne diyor?" },
+        { title:"Bekleme Listesi", body:"'Erken erişim' e-mail listesi topla. Kaç kişi kaydolur?" },
+        { title:"Sıcak Aday Görüşmesi", body:"10 hedef kişiyle 20 dk görüş. Hangi cümleler tekrarlanıyor?" },
+        { title:"Ön Sipariş", body:"'Erken kayıt %40 indirim' ile 10 satış hedefle. Bu 10 satış hedefe ulaşırsa ürün gerçekten aranıyor." },
+        { title:"Ürünü Üret", body:"Doğrulama tamamlanınca üretim güvenlidir. Öncesi risk fazla." }
+      ]},
+      { type:"h", text:"Değer Merdiveni · Ürün Ekosistemi" },
+      { type:"p", text:"Tek bir ürün otomatik gelir sisteminin çatısıdır ama gerçek gelir bir <strong>ürün merdiveni</strong>nden gelir. Farklı fiyat + farklı derinlikte 4-5 basamak, aynı müşteriyi 5 kat kâra çevirir. Russell Brunson'ın 'Value Ladder' modeli." },
+      { type:"cards", items:[
+        { title:"1. Basamak · Ücretsiz (Lead Magnet)", body:"Kontrol listesi, rehber, mini video. Amaç: e-mail al." },
+        { title:"2. Basamak · Trip Wire (30-90 TL)", body:"Çok küçük ödeme; müşteriyi 'ödeyen' segmentine sok." },
+        { title:"3. Basamak · Ana Ürün (350-1.500 TL)", body:"En çok sattığın ürün; sistemin kalbi." },
+        { title:"4. Basamak · Premium (1.500-9.000 TL)", body:"Ana kurs, mentorluk paketi, 1:1 destek." },
+        { title:"5. Basamak · VIP / Abonelik", body:"Aylık ücret, uzun ilişki, yüksek LTV." }
+      ]},
+      { type:"h", text:"Fiyatlandırma · Değer Bazlı Model" },
+      { type:"p", text:"Maliyete göre fiyatlandırma dijital üründe yanlıştır çünkü maliyet neredeyse sıfırdır. Doğru soru: <strong>'Bu ürün müşteriye ne kadar değer üretecek?'</strong> Bir Notion şablonu 5 saati geri kazandırıyorsa, fiyatı '5 saatlik zamanının değeri'nin bir kısmıdır. Freelancer için 5 saat = 2.500 TL, şablon 300 TL — hâlâ %88 tasarruf." },
+      { type:"table",
+        headers:["Yaklaşım","Formül","Ne zaman uygun?"],
+        rows:[
+          ["Maliyet Bazlı","Maliyet × 3","Fiziksel ürün (uygulanmaz, dijitalde)"],
+          ["Rakip Bazlı","Ortalama fiyat ± %20","Bilinen pazarlar"],
+          ["Değer Bazlı","Sağlanan değer × %10-30","İdeal dijital ürün modeli"],
+          ["Anchor + Bundle","Pahalı seçenek + orta paket","3 fiyat sunumu psikolojisi"]
+        ]
+      },
+      { type:"callout", title:"3 Fiyat Etkisi", text:"3 farklı paket sunmak — Düşük, Orta, Premium — orta paket satışını <strong>%50-70 arasında</strong> artırır. İnsan beyni 'ortadaki güvenli seçeneği' seçmeye programlıdır. Tek fiyat sunmak fiyatlandırmanın en zayıf halidir." },
+      { type:"h", text:"Ürün Üretim İş Akışı · 30 Günlük Plan" },
+      { type:"steps", items:[
+        { title:"Hafta 1 · Doğrulama", body:"Ön satış sayfası, 10 görüşme, bekleme listesi." },
+        { title:"Hafta 2 · İskelet", body:"Ürün içeriğinin başlıkları, akışı, örnekleri." },
+        { title:"Hafta 3 · Üretim", body:"Yazma, kayıt, tasarım. Perfeksiyondan uzak dur." },
+        { title:"Hafta 4 · Yayın", body:"Satış sayfası, ödeme, e-mail dizisi, 10 ön satış müşterisine ulaşım." }
+      ]},
+      { type:"vaka",
+        title:"İK Uzmanı · MVP → 3 Basamaklı Merdiven",
+        baglam:"İK uzmanı 6 ay 'kariyer koçluğu paketi' hazırladı, 3 satış yaptı. Mükemmel ürün ama fiyat yüksek, güven eksik.",
+        analiz:"Merdiven modeline geçildi. 1) Ücretsiz 'CV Kontrol Listesi' (lead magnet). 2) 89 TL 'Mülakat Şablonu' (trip wire). 3) 890 TL 'İlk 90 Gün Rehberi' (ana ürün). 4) 4.900 TL 'Kariyer Koçluğu' (premium). E-mail dizisi bunları sırayla önerdi.",
+        sonuc:"90 gün: 4.100 e-mail abonesi, 380 trip wire satışı, 74 ana ürün, 12 koçluk. Toplam ~168.000 TL gelir. Ana koçluk paketi bile MVP'siyle mükemmelinden daha çok sattı. Fark: <em>merdiven, güven biriktirir</em>."
+      },
+      { type:"takeaways", items:[
+        "MVP mükemmel değil, geribildirim toplayabilecek en küçük hâldir.",
+        "Ürünü üretmeden önce ön satış / bekleme listesi ile doğrula.",
+        "Değer merdiveni 5 basamak: Ücretsiz → Trip Wire → Ana → Premium → VIP.",
+        "Dijital ürün maliyete göre değil, sağlanan değere göre fiyatlanır.",
+        "3 fiyatlı paket, tek fiyattan %50+ daha çok orta paket sattırır."
+      ]}
+    ]
+  },
+
+  /* 5 */
+  { id:"huni", shortTitle:"Otomatik Satış Hunisi",
+    title:'Otomatik Satış <em>Hunisi</em> · A\'dan Ödemeye',
+    lead:"Trafik ürüne değil, huniye gelir. Bir kullanıcı 'ilk gördüğü an' ile 'ödemeyi tamamladığı an' arasında 5-9 farklı adımdan geçer. Bu adımların hiçbiri manuel olmayacaksa — otomatik satış hunisi kurmak zorunludur.",
+    blocks:[
+      { type:"h", text:"Huni · Yabancıyı Müşteriye Çeviren Boru" },
+      { type:"p", text:"Satış hunisi (funnel), bir yabancıyı sırayla farkındalıktan ödemeye taşıyan <strong>otomatik yolculuk</strong>tur. Klasik satışta bu yolculuğu bir satıcı yönlendirir; otomatik gelirde bu görevi <em>içerik, sayfa, e-mail ve ödeme sistemi</em> üstlenir. Doğru kurulmuş huni sizin uyuduğunuz saatlerde çalışan tek satıcıdır." },
+      { type:"h", text:"5 Aşamalı Otomatik Huni" },
+      { type:"cards", items:[
+        { title:"1. Farkındalık (TOFU)", body:"Yabancı seni fark eder. Trafik: SEO, sosyal, reklam." },
+        { title:"2. İlgi (MOFU)", body:"Ücretsiz değer verirsin, e-mail alırsın. Lead magnet." },
+        { title:"3. Değerlendirme", body:"E-mail dizisi + içerik + sosyal kanıt. Isınma." },
+        { title:"4. Karar (BOFU)", body:"Sınırlı zaman + net teklif. Aciliyet." },
+        { title:"5. Ödeme + Teslimat", body:"Sürtünmesiz ödeme, otomatik ürün gönderimi." }
+      ]},
+      { type:"callout", title:"TOFU / MOFU / BOFU", text:"<strong>TOFU (Top of Funnel)</strong> farkındalık, <strong>MOFU (Middle)</strong> güven, <strong>BOFU (Bottom)</strong> karar aşamalarıdır. Çoğu marka sadece BOFU içeriği üretir ('şimdi al!') — sonuç: aday havuzu yok. Doğru huni üçünü de besler." },
+      { type:"h", text:"Lead Magnet · Sıcak Aday Yakalama" },
+      { type:"p", text:"Trafik ürüne gelmez; <strong>ücretsiz değere</strong> gelir. Lead magnet bu değerin adıdır: rehber, kontrol listesi, mini video, kupon. Karşılığında e-mail veya WhatsApp alınır. Bir e-mail listesi Instagram takipçisinden ortalama <em>8-10 kat</em> daha yüksek dönüşür — kanal size aittir." },
+      { type:"cards", items:[
+        { title:"PDF Rehber", body:"'12 sayfada Notion Verimlilik Sistemi'" },
+        { title:"Kontrol Listesi", body:"'Yeni Freelancer İlk 30 Gün Kontrol Listesi'" },
+        { title:"Şablon", body:"'İlk 3 Müşteri E-mail Şablonu' — hemen kullanılır" },
+        { title:"Video Serisi", body:"'3 günlük ücretsiz e-mail dizisi'" },
+        { title:"Ücretsiz Ders", body:"'20 dakikada X sistemi' — YouTube gizli link" },
+        { title:"İndirim / Numune", body:"E-ticaret için '%15 indirim kodu'" }
+      ]},
+      { type:"h", text:"Yüksek Dönüşen Landing Page Anatomisi" },
+      { type:"steps", items:[
+        { title:"Manşet (Hero)", body:"Fayda vaadi + kısa alt satır. Örn: 'İlk 3 müşteriyi 30 günde kazan.'" },
+        { title:"Sorun Beyanı", body:"'Şu an bu ağrıyı yaşıyorsan…' → kitle kendini görür." },
+        { title:"Çözüm Sunumu", body:"Ürünün ne yaptığı, hangi bileşenden oluştuğu." },
+        { title:"Sosyal Kanıt", body:"3-5 gerçek yorum + medya logoları veya rakam." },
+        { title:"Ürün Detayı", body:"İçerik listesi, süre, format, bonuslar." },
+        { title:"Sık Sorulan Sorular", body:"6-10 itirazın direkt cevabı." },
+        { title:"Garanti + CTA", body:"'14 gün iade + Şimdi Katıl' → riski satıcı üstlenir." }
+      ]},
+      { type:"h", text:"Huni Metrikleri · Neyi Ölç?" },
+      { type:"table",
+        headers:["Aşama","Metrik","Sağlıklı Aralık"],
+        rows:[
+          ["Landing → Lead","Kayıt Oranı","%20-40"],
+          ["Lead → Trip Wire","Küçük Ürün Alma","%3-8"],
+          ["Lead → Ana Ürün","Ana Satın Alma","%1-5"],
+          ["Trip Wire → Ana","Yükseltme","%20-40"],
+          ["Genel Trafik → Müşteri","Toplam Dönüşüm","%1-3"],
+          ["Müşteri Başına Gelir","LTV","3× CAC üstü"]
+        ]
+      },
+      { type:"callout", title:"Kural · İlk Zayıf Halka", text:"Her huniyi 'en zayıf halkasından' iyileştirin. Landing %5 dönüşüyor → önce %25'e çıkarın; sonra e-maile geçin. Aynı anda 5 şeyi optimize etmek 5 şeyi de bozmaktır. <strong>Tek zayıf halka + tek deney</strong>." },
+      { type:"h", text:"Basit Otomatik Huni Örneği · İlk Kurulum" },
+      { type:"steps", items:[
+        { title:"Instagram Reels / SEO", body:"Trafik → landing sayfasına." },
+        { title:"Landing · Ücretsiz Rehber", body:"'X sorunu 7 günde çöz' → e-mail al." },
+        { title:"1. E-mail (Anında)", body:"Rehberi gönder + selamlama." },
+        { title:"2. E-mail (Gün 2)", body:"Sorun hikayesi + otorite kurma." },
+        { title:"3. E-mail (Gün 4)", body:"Vaka çalışması + sosyal kanıt." },
+        { title:"4. E-mail (Gün 6)", body:"Ana ürünü tanıt + 48 saatlik indirim." },
+        { title:"5. E-mail (Gün 8)", body:"Son çağrı + FAQ + garanti." }
+      ]},
+      { type:"vaka",
+        title:"Verimlilik Danışmanı · Huni ile Aylık 65.000 TL",
+        baglam:"Danışman aylık 4-6 danışan alıyor, tüm konuşmalar manuel, yeni müşteri edinme çok yorucu.",
+        analiz:"5 aşamalı otomatik huni kuruldu: Instagram Reels → 'Verimlilik Denetim Rehberi' (ücretsiz PDF) → 7 günlük e-mail dizisi → 490 TL 'Verimlilik Şablon Paketi' → 3.900 TL '90 Günlük Sistem Programı'. Meta reklamla trafik ölçeklendi (Piksel ile retargeting).",
+        sonuc:"5 ay sonra: aylık 2.400 lead, 340 trip wire satışı, 42 ana kurs alımı → toplam ~65.000 TL gelir. Danışman haftada sadece 4 saat müşteri konuşuyor. Geri kalanı otomatik huni yönetiyor."
+      },
+      { type:"takeaways", items:[
+        "Huni yabancıyı otomatik olarak müşteriye taşıyan yolculuktur.",
+        "5 aşama: Farkındalık, İlgi, Değerlendirme, Karar, Ödeme.",
+        "Trafik ürüne değil, lead magnete gelir — önce e-mail al.",
+        "Landing → Lead %20-40, Lead → Ana Ürün %1-5 sağlıklı aralık.",
+        "En zayıf halka önce iyileştirilir; tek deney kuralı geçerlidir."
+      ]}
+    ]
+  },
+
+  /* 6 */
+  { id:"trafik", shortTitle:"Trafik Motorları",
+    title:'Trafik <em>Motorları</em> · SEO, Sosyal, Reklam',
+    lead:"En iyi ürün + en iyi huni bile trafik olmadan boştur. Otomatik gelir sisteminin en büyük yakıtı — sürdürülebilir, birikimli, kontrolünüzde olan trafik akışıdır. Tek kanala bağımlı sistem, o kanal düşünce çöker.",
+    blocks:[
+      { type:"h", text:"3 Trafik Türü · Nereden Gelir?" },
+      { type:"cards", items:[
+        { title:"Organik Trafik", body:"SEO, sosyal, YouTube — para yerine zaman ödeyerek biriktirilir." },
+        { title:"Ücretli Trafik", body:"Meta Ads, Google Ads, TikTok Ads — zamanı satın alırsın." },
+        { title:"Elden Gelen (Earned)", body:"İşbirliği, PR, ağızdan söz, misafir yazı — güvenle gelir." }
+      ]},
+      { type:"callout", title:"Kural · 3 Kanal Diversifikasyonu", text:"Herhangi bir tek trafik kanalına <strong>%60'tan fazla</strong> bağlı otomatik gelir sistemi kırılgandır. Instagram algoritması değişince biten hesaplar, Google güncellemesiyle çöken siteler bu kuralın kanıtıdır. Hedef: en az 3 aktif kanal." },
+      { type:"h", text:"SEO · Uykuda Çalışan Trafik" },
+      { type:"p", text:"Doğru anahtar kelime + doğru içerik + doğru site yapısı, Google'dan <strong>aylarca kesintisiz trafik</strong> getirir. SEO en yavaş büyüyen ama en birikimli kanaldır. 6 ayda başlar, 12 ayda katlanır, 24 ayda üstel büyür. Sabreden kazanır." },
+      { type:"steps", items:[
+        { title:"Anahtar Kelime Araştırması", body:"Ubersuggest, AnswerThePublic ile hedef arama sorguları." },
+        { title:"Aylık 6-10 Blog", body:"Sorulan sorulara detaylı cevap; 1.500+ kelime." },
+        { title:"On-Page SEO", body:"H1, meta title, alt text, iç bağlantı, hız optimizasyonu." },
+        { title:"Bağlantı İnşası", body:"Misafir yazı, kaliteli backlink, sektör listeleri." },
+        { title:"İçerik Güncelleme", body:"6 ayda bir eski yazıları yenile → sıralama artar." }
+      ]},
+      { type:"h", text:"Sosyal Medya Trafiği · 3 Ana Platform" },
+      { type:"table",
+        headers:["Platform","Güçlü Yön","İdeal İçerik","Trafik Yönü"],
+        rows:[
+          ["Instagram / Reels","Ürün + görsel","Kısa video + carousel","Bio link + Story sticker"],
+          ["YouTube","Uzun form + arama","10-25 dk uzman video","Description linkleri"],
+          ["LinkedIn","B2B + karar verici","Metin post + carousel","Profil linki + newsletter"],
+          ["Twitter / X","Fikir + tartışma","Konu başlığı + thread","Bio link"],
+          ["TikTok","Genç kitle + hız","Kısa video hook","Bio link"],
+          ["Pinterest","Kadın kitle + arama","Dikey grafik","Direkt ürün linki"]
+        ]
+      },
+      { type:"h", text:"Ücretli Trafik · Bütçeyi Yatırım Yapmak" },
+      { type:"p", text:"Ücretli reklam ('performance marketing'), otomatik gelir sistemine <strong>ölçek katalizörüdür</strong>. Doğru huni + iyi ürün + net avatar olmadan reklam para yakma sanatıdır. Ancak bu üçü varsa reklam en hızlı büyüme kanalıdır: 1 TL yatır, 3 TL geri al modeli mümkün." },
+      { type:"cards", items:[
+        { title:"Meta Ads (Instagram + Facebook)", body:"Görsel + ilgi alanı hedefleme. Türkiye pazarında en yaygın." },
+        { title:"Google Ads (Arama)", body:"Alım niyeti yüksek. 'X satın al' aramasında ürün olarak çık." },
+        { title:"YouTube Ads", body:"Video reklam, uzun form ürünler için ideal." },
+        { title:"TikTok Ads", body:"Genç kitle, ucuz CPM, viral potansiyel." },
+        { title:"Retargeting", body:"Site ziyaretçisi + terkler → en yüksek ROI'li kanal." }
+      ]},
+      { type:"h", text:"İçerik Trafik Rutini · Haftalık Ritim" },
+      { type:"steps", items:[
+        { title:"Pazartesi · Long-form", body:"Blog / YouTube / LinkedIn uzun post — SEO ve otorite." },
+        { title:"Salı-Çarşamba · Reels", body:"1-2 kısa video, hook + değer + CTA." },
+        { title:"Perşembe · Carousel", body:"Eğitici karusel; kaydettirir, otorite kurar." },
+        { title:"Cuma · E-mail Newsletter", body:"Haftanın özeti + değer + soft ürün önerisi." },
+        { title:"Cumartesi · Etkileşim", body:"DM'lere döner, yorum yanıtlar, işbirliği kur." },
+        { title:"Pazar · Planlama + İçerik Toplu Üretim", body:"Sonraki haftayı hazırla, batch üret." }
+      ]},
+      { type:"callout", title:"90/10 İçerik Kuralı", text:"Trafik içeriklerinizin <strong>%90'ı</strong> değer, %10'u satış olmalı. Sürekli satış içeriği hem algoritma hem kullanıcı tarafında yorulmaya sebep olur. Değer içerikleri güven biriktirir; satış içerikleri o biriken güveni bozdurur." },
+      { type:"h", text:"Diversifikasyon Matrisi · İdeal Dağılım" },
+      { type:"table",
+        headers:["Kanal","Yeni Sistem","Olgun Sistem"],
+        rows:[
+          ["SEO / Blog","%15","%30"],
+          ["Instagram / TikTok","%40","%20"],
+          ["YouTube","%15","%20"],
+          ["E-mail Listesi","%10","%15"],
+          ["Ücretli Reklam","%15","%10"],
+          ["İşbirliği / Referans","%5","%5"]
+        ]
+      },
+      { type:"vaka",
+        title:"E-kitap Yazarı · 3-Kanallı Trafik ile %240 Büyüme",
+        baglam:"Yazar 12 ay boyunca yalnız Instagram'a bağlıydı. 30 bin takipçi, aylık ortalama 90 ürün satışı. Instagram bir algoritma değişikliğiyle erişimi düştü, satış %60 düştü.",
+        analiz:"Diversifikasyon planı: SEO blog (haftada 2 yazı), YouTube (haftada 1 video), Instagram (mevcut), Meta retargeting reklam. E-mail listesi her yerden beslendi. 6 ayda 4 kanal aktif hale geldi.",
+        sonuc:"12. ay: Toplam trafik %240 arttı, Instagram'ın toplam trafikteki payı %85'ten %38'e düştü. Bir algoritma değişikliği artık sistemi sarsmıyor. <em>Kanal çeşitliliği = otomatik gelirin sigortası</em>."
+      },
+      { type:"takeaways", items:[
+        "Otomatik gelir sistemi trafik olmadan hiçbir şeydir.",
+        "3 kanal diversifikasyonu; herhangi birine %60'tan fazla bağlı olma.",
+        "SEO en yavaş ama en birikimli kanal; 6 ayda başlar, 24 ayda katlar.",
+        "Ücretli reklam ancak huni + ürün + avatar hazırsa ölçek katalizörüdür.",
+        "%90 değer / %10 satış içerik dengesi algoritma dostu, kitle dostudur."
+      ]}
+    ]
+  },
+
+  /* 7 */
+  { id:"email", shortTitle:"E-mail Otomasyonu",
+    title:'E-mail <em>Otomasyonu</em> · Uyurken Satış',
+    lead:"E-mail listesi otomatik gelirin altın rezervidir. Sosyal medyayı platform sahibi kontrol eder; e-mail listesini yalnızca siz kontrol edersiniz. Aynı sayıda takipçi + e-mail listesi karşılaştırıldığında, e-mail satışın 8-10 katıdır.",
+    blocks:[
+      { type:"h", text:"Neden E-mail? · Kanalın Sizin" },
+      { type:"p", text:"Instagram sizi susturabilir, Google sıralamanızı düşürebilir, TikTok hesabınızı kapatabilir. E-mail listeniz üzerinde <strong>tam kontrol</strong> sizindir. Bir e-mail 100 kişiye gönderiliyorsa 90'ı görür, 40'ı açar, 10'u tıklar. Instagram'da 100 takipçiden ortalama 3'ü içeriği görür. Erişim gücünün en yüksek olduğu kanal." },
+      { type:"callout", title:"E-mail Marketing ROI", text:"Litmus 2025: E-mail marketing her <strong>1 dolara ortalama 36 dolar getirir</strong> — dijital pazarlamanın en yüksek ROI'li kanalı. Instagram organik: 1 dolara ~4 dolar. Fark 9 kat." },
+      { type:"h", text:"3 Temel E-mail Türü" },
+      { type:"cards", items:[
+        { title:"Broadcast", body:"Anlık, tüm listeye toplu gönderim. Haftalık newsletter, duyurular, lansman." },
+        { title:"Otomasyon (Sequence)", body:"Belirli tetikleyicilerle sıralı gönderim. Hoşgeldin, terk edilen sepet, doğum günü." },
+        { title:"Segmentli", body:"Belirli kritere göre alt gruplara farklı içerik. Ödeyen vs ödemeyen ayrımı." }
+      ]},
+      { type:"h", text:"Hoşgeldin (Welcome) Dizisi · 7 E-mail" },
+      { type:"steps", items:[
+        { title:"E-mail 1 (Anında)", body:"'Rehber ekte + kısa merhaba' → beklenti kurma." },
+        { title:"E-mail 2 (Gün 2)", body:"Kişisel hikaye — 'ben kimim, neden yapıyorum'. Güven." },
+        { title:"E-mail 3 (Gün 4)", body:"Ücretsiz bir uygulama ipucu → değer üstüne değer." },
+        { title:"E-mail 4 (Gün 6)", body:"Vaka çalışması — 'Ayşe böyle X'i çözdü' → sosyal kanıt." },
+        { title:"E-mail 5 (Gün 8)", body:"Trip wire ürünü + %30 hoşgeldin indirimi → 48 saat." },
+        { title:"E-mail 6 (Gün 10)", body:"Sık sorulan sorular + garanti + son gün hatırlatma." },
+        { title:"E-mail 7 (Gün 14)", body:"Ana ürüne yumuşak geçiş → değer merdiveni ilk basamak." }
+      ]},
+      { type:"h", text:"Yüksek Dönüşen E-mail Anatomisi" },
+      { type:"cards", items:[
+        { title:"Konu Satırı", body:"7-9 kelime, merak veya değer. 'Bunu neden yıllardır bilmiyorum?' — açılma oranı yüksek." },
+        { title:"Ön İzleme (Preheader)", body:"Konu satırının yanındaki 40 karakter. Konuyu tamamlar." },
+        { title:"Giriş", body:"Kişisel bir hikaye veya sarsıcı bir cümle. Metnin devamını 'okumak istetir'." },
+        { title:"Ana Metin", body:"Kısa paragraflar (2-3 satır). Değer + hikaye + otorite." },
+        { title:"Tek CTA", body:"'Buraya tıkla' / 'Şimdi başla' — tek, net eylem." },
+        { title:"PS Satırı", body:"E-mailin son satırı. Açma sonrası en çok okunan bölüm." }
+      ]},
+      { type:"callout", title:"Konu Satırı = Açılma", text:"E-maillerin <strong>%64'ü konu satırına göre</strong> açılır ya da silinir. Konu satırı yazımı e-mail marketing'in en kritik becerisidir. Yaklaşımlar: merak ('Neden yıllardır…'), sayı ('3 kural…'), kişisel ('Sadece sana yazıyorum…'), karşı görüş ('Herkes yanlış biliyor…')." },
+      { type:"h", text:"Otomasyon Şablonları · İş Akışları" },
+      { type:"table",
+        headers:["Tetikleyici","İçerik","Amaç"],
+        rows:[
+          ["Yeni abone","7-e-mail hoşgeldin dizisi","Isınma + ilk satış"],
+          ["Sepet terki","30 dk / 24 sa / 3 gün","Sepeti tamamlatma"],
+          ["Trip wire alımı","Ana ürün tanıtım dizisi","Yükseltme"],
+          ["Ana ürün alımı","Kullanım rehberi + soft VIP","Tatmin + LTV artışı"],
+          ["30 gündür pasif","Değer + soft geri çağrı","Yeniden aktif etme"],
+          ["Doğum günü","Özel indirim + kişisel not","Sadakat + satış"]
+        ]
+      },
+      { type:"h", text:"E-mail Ölçütleri · Sağlıklı Aralık" },
+      { type:"stats", items:[
+        { value:"%25-45", label:"Sağlıklı açılma oranı (Open Rate)" },
+        { value:"%3-8", label:"Sağlıklı tıklama oranı (CTR)" },
+        { value:"%1-3", label:"Satış dönüşüm oranı" },
+        { value:"36×", label:"Ortalama e-mail marketing ROI" }
+      ]},
+      { type:"h", text:"E-mail Araçları Karşılaştırması" },
+      { type:"table",
+        headers:["Araç","Güçlü Yön","Kimin İçin"],
+        rows:[
+          ["MailerLite","Ücretsiz 1.000 abone","Yeni başlayan"],
+          ["ConvertKit","Yaratıcı odaklı, otomasyon","İçerik üreticiler"],
+          ["ActiveCampaign","Güçlü segmentasyon","Orta-büyük işletme"],
+          ["Klaviyo","E-ticaret entegrasyonu","Shopify markaları"],
+          ["Sendgrid","Yüksek hacim, teknik","API kullanıcı"]
+        ]
+      },
+      { type:"callout", title:"Kural · Değer Sonra Satış", text:"E-mail listeniz sadece <strong>satış kanalı</strong> olarak kullanılırsa hızla çöker. Kural: her 4 e-mailden 3'ü değer, 1'i satış. Değer içerikleri açılma oranını yükseltir, satış içerikleri de yüksek açılma sayesinde çalışır." },
+      { type:"vaka",
+        title:"Kişisel Marka Yazarı · Listeden Aylık 45.000 TL",
+        baglam:"Yazar 12.000 e-mail abonesine sahip, ama sadece 2 haftada bir 'ürün var' e-maili atıyor. Ortalama satış: 10-15/ay.",
+        analiz:"Sistem yeniden kuruldu: haftada 2 değer e-maili + 1 soft satış e-maili. 7-emaillik hoşgeldin dizisi. Sepet terki otomasyonu. Segmentasyon: 'ücretsiz aboneler' vs 'ödeyenler'. Farklı yaklaşım.",
+        sonuc:"4 ay: Açılma oranı %18 → %41, aylık ürün satışı 12 → 68. Aylık gelir ~45.000 TL. Aynı liste — sadece iletişim ritmi ve otomasyonlar değişti. E-mail otomatik gelirin altın rezervidir."
+      },
+      { type:"takeaways", items:[
+        "E-mail size ait tek kanal — sosyal medyayı platform kontrol eder.",
+        "E-mail marketing ROI 36×; hiçbir kanal buna yaklaşamaz.",
+        "Hoşgeldin dizisi 7 e-mail; ilk 14 gün en yüksek satış dönüşümü.",
+        "Konu satırı e-mailin %64'ünü belirler; sürekli test edilir.",
+        "4:1 değer-satış oranı listeyi yormadan çalıştıran altın kuraldır."
+      ]}
+    ]
+  },
+
+  /* 8 */
+  { id:"sistem", shortTitle:"Ödeme, Teslimat ve Sistem",
+    title:'Ödeme, Teslimat ve <em>Sistem Kalbi</em>',
+    lead:"Ürün + huni + trafik + e-mail hazırdır ama ödeme akışı sürtünmeli, teslimat manuel, destek dağınıksa 'otomatik gelir' bir yalan olur. Bu bölüm sistemin görünmeyen ama kritik altyapısını kurar.",
+    blocks:[
+      { type:"h", text:"Otomatik Sistem · Görünmez Motor" },
+      { type:"p", text:"Bir müşteri 'Satın Al' butonuna bastığı andan ürünü teslim aldığı ana kadar tüm süreç <strong>insan müdahalesiz</strong> çalışmalıdır. Ödeme → onay e-maili → ürün gönderimi → müşteri portalı → destek — her adım kurulduğunda 'satış başına manuel dakika' sıfıra iner. Bu sıfır, otomatik gelirin gerçek anlamıdır." },
+      { type:"h", text:"Ödeme Sağlayıcıları · Türkiye ve Uluslararası" },
+      { type:"cards", items:[
+        { title:"iyzico / Paytr", body:"Türkiye kredi kartı + havale; kolay entegrasyon." },
+        { title:"Stripe", body:"Uluslararası satış; abonelik, kupon, çoklu para birimi güçlü." },
+        { title:"Gumroad", body:"Dijital ürün için 'tak-çalıştır' — landing + ödeme + teslimat tek platform." },
+        { title:"Shopify Payments", body:"E-ticaret markaları için tam stack." },
+        { title:"PayPal", body:"Yurtdışı ödeme; Türkiye şu an sınırlı." },
+        { title:"Payoneer / Wise", body:"Yurtdışı gelirini Türkiye'ye getirme kanalı." }
+      ]},
+      { type:"callout", title:"Kural · Sürtünmesiz Ödeme", text:"Ödeme adım sayısı arttıkça dönüşüm oranı geometrik olarak düşer. 3 adımlık ödeme → %8-12, 1 tıklı ödeme → %25+. Her ekstra alan (adres, telefon, vergi) satışın <strong>%7-15'ini</strong> düşürür. Dijital üründe zorunlu olmayan alanı isteme." },
+      { type:"h", text:"Ödeme Ekranı Best Practice" },
+      { type:"steps", items:[
+        { title:"Tek Sayfa Ödeme", body:"Sepet + iletişim + kart tek ekranda. 'Devam et' butonu gizler." },
+        { title:"Güven Rozetleri", body:"'256-bit SSL', 'iyzico Onaylı', '14 gün iade' → risk azalt." },
+        { title:"Ödeme Yöntemi Çeşitliliği", body:"Kart + havale + taksit + kripto. Türkiye'de taksit satın alma tetiği." },
+        { title:"Yükleme Göstergesi", body:"Ödeme sırasında 'işleniyor…' mesajı; kaybolan ekran satışın %40'ını yer." },
+        { title:"Teşekkür Ekranı + Upsell", body:"'Başarıyla satın aldın! → Tamamlayıcı ürünü de %30 indirim' ekle." }
+      ]},
+      { type:"h", text:"Otomatik Teslimat · Dijital Ürün" },
+      { type:"table",
+        headers:["Ürün Türü","Teslimat Yolu","Zaman"],
+        rows:[
+          ["PDF / E-kitap","Ödeme sonrası otomatik e-mail","Anında"],
+          ["Şablon (Notion, Excel)","Link + davet","Anında"],
+          ["Video Kurs","Platform hesabı (Teachable, Podia)","Anında"],
+          ["Community","Discord / Telegram davet","Anında – 24 sa"],
+          ["Yazılım / Erişim","API key + kullanıcı ekleme","Anında"],
+          ["Print-on-Demand","Baskı ortağına otomatik sipariş","3-14 gün"]
+        ]
+      },
+      { type:"h", text:"Kurs / İçerik Barındırma Platformları" },
+      { type:"cards", items:[
+        { title:"Teachable", body:"Kurs + community + landing hepsi bir yerde." },
+        { title:"Kajabi", body:"Premium; kurs + huni + e-mail + üye alanı tam paket." },
+        { title:"Thinkific", body:"Kurs odaklı, uygun fiyatlı." },
+        { title:"Podia", body:"Kurs + dijital ürün + abonelik + community." },
+        { title:"Gumroad", body:"Küçük dijital ürünler için en kolay." },
+        { title:"Stan Store", body:"Sosyal medya link + ürün satışı entegre." }
+      ]},
+      { type:"h", text:"Otomatik Destek Sistemi" },
+      { type:"steps", items:[
+        { title:"Sık Sorulan Sorular (SSS)", body:"En az 20 soru → soruların %80'i buradan cevaplanır." },
+        { title:"Otomatik E-mail Yanıtları", body:"'Şu an kontrol ediyorum, en geç 24 saat içinde dönüyorum'." },
+        { title:"Anahtar Kelime Tetikleyici", body:"'iade' → iade politikası e-maili; 'fatura' → fatura akışı." },
+        { title:"Chatbot", body:"ManyChat, Tidio: sık sorulara anlık cevap." },
+        { title:"Yardım Merkezi", body:"Notion / Intercom Help / GitBook üzerinde arama motorlu bilgi tabanı." }
+      ]},
+      { type:"h", text:"Vergi ve Yasal Yapı · Türkiye" },
+      { type:"p", text:"Otomatik gelir sürekli sattığı için <strong>düzenli faturalandırma</strong> ve <strong>vergi mükellefliği</strong> gerektirir. Türkiye'de en yaygın 2 seçenek: (1) <em>Şahıs Şirketi</em> — kolay kurulum, düşük başlangıç maliyeti, sınırlı gider yazma. (2) <em>Limited Şirket</em> — daha yüksek gider yazma, kurumsal görünüm, yurtdışı ödeme almada kolaylık. Mali müşavir olmadan başlamayın; ilk 3 ayda maliyet 500-1.500 TL/ay civarındadır." },
+      { type:"callout", title:"KDV ve İhracat Muafiyeti", text:"Yurtdışına dijital hizmet satarsanız <strong>KDV muafiyeti</strong> uygulanabilir (2025 yönetmeliği). Payoneer / Wise + Şahıs şirketi kombinasyonu Türkiye'deki dijital girişimcilerin en yaygın modelidir. Detay için mutlaka mali müşavir." },
+      { type:"h", text:"Sistem Mimarisi · Örnek Bir Kurulum" },
+      { type:"table",
+        headers:["Katman","Araç","Görev"],
+        rows:[
+          ["Trafik","Instagram, YouTube, Google","Yabancıyı getir"],
+          ["Landing","Framer / Webflow / WordPress","Aday yakala"],
+          ["E-mail","MailerLite / ConvertKit","Isınma + satış"],
+          ["Ödeme","iyzico / Stripe / Gumroad","Para tahsili"],
+          ["Teslimat","Podia / Teachable / Notion","Ürün ver"],
+          ["Destek","Tidio + SSS + e-mail","Sorun çöz"],
+          ["Analitik","GA4 + Hotjar","Ölç ve iyileştir"]
+        ]
+      },
+      { type:"vaka",
+        title:"Sanal Asistan Kursu · Otomatik Sistem ile 4 Saat/Hafta",
+        baglam:"Kurucu haftada 25-30 saat müşteri destek + fatura + soru cevap yapıyordu. Kurs iyi satıyor ama kurucunun zamanı yok.",
+        analiz:"Sistem tamamen otomatize edildi: Podia (kurs + ödeme + üye), Tidio (chatbot + SSS), MailerLite (otomatik ısınma + satış sonrası dizi), Zapier (Podia → e-mail listesine ekleme), Notion bilgi tabanı.",
+        sonuc:"3 ay sonra: haftalık bakım 25 saatten 4 saate düştü, satış hacmi %30 arttı çünkü artık pazarlama ve iyileştirmeye vakit kalıyor. Sistem gerçekten <em>otomatik</em>."
+      },
+      { type:"takeaways", items:[
+        "Ödeme adımı azaldıkça dönüşüm geometrik artar — tek sayfa hedef.",
+        "Dijital ürünlerde teslimat anındadır; manuel gönderim sistemi bozar.",
+        "Kurs için Teachable/Podia, küçük ürün için Gumroad idealdir.",
+        "Sık Sorulan Sorular + chatbot destek yükünün %80'ini otomatize eder.",
+        "Yasal yapı (şahıs veya limited) ilk aydan itibaren kurulmalı."
+      ]}
+    ]
+  },
+
+  /* 9 */
+  { id:"optimizasyon", shortTitle:"Optimizasyon ve Metrikler",
+    title:'Optimizasyon · <em>A/B, Metrikler</em>, Dönüşüm',
+    lead:"Kurulmuş sistem optimize edilmedikçe sadece 'çalışır'. Optimize edilmiş sistem ise 'gerçekten kazandırır'. Aynı trafik + aynı ürünle 2-3 katı gelir — sadece huninin doğru yerine doğru müdahale ederek.",
+    blocks:[
+      { type:"h", text:"Ölçmediğini İyileştiremezsin" },
+      { type:"p", text:"Peter Drucker: <strong>'Ölçmediğini yönetemezsin.'</strong> Otomatik gelirde bu daha da keskindir: ölçemediğin metriği iyileştiremezsin, iyileştiremediğin metrik seni durdurur. Rakamlara bakmayan sistem 'hislere göre yönetilen' sistemdir — bu, otomatik gelirin en pahalı hatasıdır." },
+      { type:"h", text:"North Star Metric · Tek Sayı" },
+      { type:"p", text:"Onlarca metrik olsa da hepsinin üstünde <strong>tek bir kuzey yıldızı metriği</strong> olmalıdır. Bu metrik iş modelinin sağlığını tek başına gösterir. Dijital ürün satıcısı için genellikle <em>Aylık Tekrar Eden Gelir (MRR)</em> ya da <em>Aylık Aktif Müşteri Sayısı</em>. Kurs satıcısı için 'ödeyen öğrenci sayısı'. Abonelik için 'iptal etmeyen üye sayısı'." },
+      { type:"h", text:"Huni Metrikleri · Katman Katman" },
+      { type:"table",
+        headers:["Aşama","Metrik","Sağlıklı"],
+        rows:[
+          ["Trafik","Site Ziyareti / Sosyal Erişim","Aylık büyüme"],
+          ["Landing","Kayıt Oranı (Lead)","%20-40"],
+          ["E-mail","Açılma Oranı","%25-45"],
+          ["E-mail","Tıklama Oranı","%3-8"],
+          ["Ödeme Sayfası","Sepet Tamamlama","%50-70"],
+          ["Ana Ürün","Genel Dönüşüm","%1-5"],
+          ["Müşteri","LTV (Yaşam Boyu Değer)","3× CAC üstü"],
+          ["Genel","ROAS (Reklam Yatırım Getirisi)","≥ 3×"]
+        ]
+      },
+      { type:"h", text:"A/B Test · Bilimsel Karar Verme" },
+      { type:"p", text:"A/B testi; iki farklı versiyonu aynı anda gösterip hangisinin daha iyi çalıştığını ölçen bilimsel yöntemdir. Landing manşetinden ödeme butonuna, e-mail konu satırından ürün fiyatına kadar — <strong>her varsayım test edilir</strong>. Test etmeden değişiklik yapmak, 'iyileştirme' değil, 'zar atma'dır." },
+      { type:"cards", items:[
+        { title:"Landing Manşeti", body:"'İlk 3 Müşteriyi 30 Günde Kazan' vs 'Freelance Kariyerine Hızlı Başla'." },
+        { title:"CTA Butonu", body:"'Şimdi Katıl' vs 'Sistemi İncele' vs 'Ücretsiz Başla'." },
+        { title:"Fiyat", body:"390 TL vs 490 TL — hangisi daha yüksek gelir üretir?" },
+        { title:"Ödeme Butonu Rengi", body:"Altın vs beyaz vs yeşil — anlık dönüşüm farkı." },
+        { title:"E-mail Konu Satırı", body:"Merak vs değer vs kişisel yaklaşım." },
+        { title:"Video vs Görsel", body:"Landing hero'da hangisi daha çok kaydırır?" }
+      ]},
+      { type:"callout", title:"A/B Test Kuralları", text:"1) Tek seferde <strong>tek değişken</strong> test et. 2) Versiyon başına <strong>en az 1.000 gösterim / 100 dönüşüm</strong> bekle. 3) İstatistiksel anlamlılık %95 üstünde olmalı. 4) Test süresi minimum 7 gün. Bu kurallara uymayan A/B testi 'his testi'dir." },
+      { type:"h", text:"Zayıf Halka Tespiti · Nereye Müdahale?" },
+      { type:"steps", items:[
+        { title:"Metrikleri Sırala", body:"Her aşamanın dönüşüm oranını yaz." },
+        { title:"Sektör Benchmark ile Karşılaştır", body:"Hangi metrik ortalamanın çok altında?" },
+        { title:"En Düşük Halkayı Seç", body:"Sadece bir tanesine odaklan." },
+        { title:"Hipotez Kur", body:"'Landing manşet çok soyut, dönüşüm düşük olabilir'." },
+        { title:"A/B Testi Kur", body:"Yeni versiyon vs mevcut." },
+        { title:"Sonucu Uygula, Sonraki Halkaya Geç", body:"Kazanan versiyonu sabitle, bir sonraki zayıf halkaya bak." }
+      ]},
+      { type:"h", text:"Analitik Araçları" },
+      { type:"table",
+        headers:["Araç","Amaç","Ücret"],
+        rows:[
+          ["Google Analytics 4","Site trafiği, davranış","Ücretsiz"],
+          ["Meta Piksel","Reklam dönüşüm izleme","Ücretsiz"],
+          ["Hotjar / Microsoft Clarity","Heatmap, kullanıcı kaydı","Ücretsiz-orta"],
+          ["Google Search Console","SEO performansı","Ücretsiz"],
+          ["Mixpanel / Amplitude","Ürün analytics","Orta-yüksek"],
+          ["Databox / Klipfolio","Panel birleştirme","Ücretsiz-orta"]
+        ]
+      },
+      { type:"h", text:"Aylık Optimizasyon Rutini" },
+      { type:"steps", items:[
+        { title:"Ayın 1'i · Rapor", body:"Tüm huni metriklerini tabloya döküm." },
+        { title:"Ayın 3'ü · Zayıf Halka Analizi", body:"En düşük dönüşen aşamayı bul." },
+        { title:"Ayın 5'i · A/B Testi Kur", body:"Yeni versiyon yayın." },
+        { title:"Ayın 15'i · Ara Sonuç", body:"İstatistiksel anlamlılık kontrol." },
+        { title:"Ayın 25'i · Karar", body:"Kazanan versiyonu sabitle." },
+        { title:"Ayın 30'u · Sonraki Ayın Planı", body:"Yeni hipotez, yeni test." }
+      ]},
+      { type:"callout", title:"Kural · %10 İyileştirme", text:"Ayda 3 farklı huni katmanında %10 iyileştirme, yıllık geliri <strong>%150+</strong> artırabilir. Bileşik etki, otomatik gelirin görünmez zenginlik motorudur. 'Sürekli küçük iyileştirme' 'ara sıra devasa değişim'den her zaman güçlüdür." },
+      { type:"vaka",
+        title:"Kurs Satıcısı · Optimizasyon ile Aylık 90.000 TL'ye",
+        baglam:"Kurs 12 ay boyunca aynı fiyat, aynı sayfa, aynı e-mail dizisi. Aylık gelir sabit 40.000 TL, artmıyor. 'Trafik daha çok gelsin' diye reklam bütçesi katlandı, gelir 45.000 TL oldu — verimsiz.",
+        analiz:"Trafik yerine dönüşüm optimize edildi. Ay 1: landing manşeti A/B testi (%22 → %31 kayıt). Ay 2: ödeme sayfası tek sayfaya indirildi (%54 → %71 tamamlama). Ay 3: e-mail konu satırları (açılma %22 → %38). Ay 4: 3-paket fiyat modeli.",
+        sonuc:"5. ay: aynı trafik ile gelir 40.000 → 92.000 TL (2,3× artış). Reklam bütçesi %30 azaldı. Toplam kâr 3,5 kat büyüdü. Trafik değişmedi — <em>huni değişti</em>."
+      },
+      { type:"takeaways", items:[
+        "Ölçmediğin metriği iyileştiremezsin — panosuz sistem yönetilemez.",
+        "North Star Metric onlarca metrik arasında pusuladır.",
+        "A/B testinde tek değişken, min. 1.000 gösterim, %95 anlamlılık şart.",
+        "En zayıf halka her zaman önce iyileştirilir; toplam iyileşme oradan gelir.",
+        "Aylık %10'luk iyileştirmeler bileşik olarak yıllık %150+ getirir."
+      ]}
+    ]
+  },
+
+  /* 10 */
+  { id:"olcek", shortTitle:"Ölçekleme ve Ekipsiz Büyüme",
+    title:'Ölçekleme · <em>Ekipsiz Büyüme</em> ve LTV',
+    lead:"Sistem kurulmuş, satış geliyor, huni çalışıyor. Şimdi ölçek zamanı. Ancak ölçekleme 'daha çok çalışmak' değil, 'sistemin daha fazlasını yapmasına izin vermek'tir. Bu bölüm otomatik gelir sistemini kişisel iş hayatına bağlı olmaktan çıkarır.",
+    blocks:[
+      { type:"h", text:"Ölçek · Aynı Girdiyle Daha Çok Çıktı" },
+      { type:"p", text:"Bir iş modelinin gerçek testi <strong>ölçeklenebilir mi</strong> sorusudur. Ölçeklenebilir sistem; girdi (sizin zamanınız, para, dikkat) sabitken çıktıyı (gelir, kullanıcı, etki) katlar. Aksi hâlde 'başka bir iş' kurmuş olursunuz — kendinize maaş ödeyen bir iş. Otomatik gelirin ruhu bunun tersidir." },
+      { type:"h", text:"3 Büyüme Vektörü" },
+      { type:"cards", items:[
+        { title:"Daha Fazla Müşteri (X)", body:"Trafik + huni optimizasyonu ile aynı üründe daha çok satış." },
+        { title:"Daha Yüksek Sepet (Y)", body:"Fiyat artışı, bundle, cross-sell, upsell." },
+        { title:"Daha Uzun İlişki (Z)", body:"Abonelik, sadakat, tekrar satın alma — LTV artışı." }
+      ]},
+      { type:"callout", title:"XYZ Denklemi", text:"<strong>Gelir = X × Y × Z.</strong> Her boyutu %20 artırırsan gelir ~%70 katlar (1,2×1,2×1,2 = 1,73). 'Sadece daha çok müşteri' düşüncesi 1 boyutlu; 3 boyutlu düşünmek üçkat daha güçlü büyüme sağlar." },
+      { type:"h", text:"LTV / CAC Denklemi · Sürdürülebilirlik Testi" },
+      { type:"p", text:"Ölçek reklamla gelir; reklam <strong>LTV > 3 × CAC</strong> ise sürdürülebilir. Yani müşteri edinme maliyeti 100 TL ise, o müşteriden ömür boyu en az 300 TL kazanmalısın. Bu oran 2× altındaysa reklam bütçe yakımı, 3× üstündeyse ölçekleme motoru olur." },
+      { type:"table",
+        headers:["Boyut","Nasıl Artırılır","Örnek"],
+        rows:[
+          ["Ortalama Sepet","Bundle, upsell, premium fiyat","'Kurs + community' paketi"],
+          ["Sıklık","Aylık abonelik, aylık kutu","Membership modeli"],
+          ["Süre","Sadakat programı, sürekli değer","Yıllık üye ödülü"],
+          ["Çapraz Satış","Tamamlayıcı ürünler","'Kurs + şablon paketi'"],
+          ["Ürün Merdiveni","Yükseltme yolu","Trip wire → ana → premium"]
+        ]
+      },
+      { type:"h", text:"Ekipsiz Ölçek · Otomasyon + Delegasyon" },
+      { type:"steps", items:[
+        { title:"Görev Envanteri", body:"Haftalık tüm işlerini listele; süreye göre sırala." },
+        { title:"$/saat Analizi", body:"Bir başkasının 100 TL/saatte yapabileceği tüm işler delegasyona." },
+        { title:"Otomasyonlanabilir Olanlar", body:"Zapier, Make, ChatGPT, AI ile makine yapsın." },
+        { title:"Sanal Asistan", body:"Rutin destek, e-mail, sosyal medya programlama." },
+        { title:"Freelance Uzman", body:"Video editi, tasarım, SEO — proje bazlı." },
+        { title:"Odak: Sadece 3 İş", body:"Strateji + ürün + kritik iletişim. Diğer her şey sistem yapar." }
+      ]},
+      { type:"h", text:"Aylık Abonelik · Ölçekli Gelir" },
+      { type:"p", text:"Tek satış geliri size <strong>bir kez</strong> öder. Abonelik <strong>her ay</strong> öder. Aynı 100 müşteri, 500 TL'lik tek satışta 50.000 TL getirir; aylık 100 TL abonelikte 12 ayda 120.000 TL getirir. Bu <em>MRR (Monthly Recurring Revenue)</em> modeli otomatik gelirin en güçlü halidir." },
+      { type:"cards", items:[
+        { title:"Kurs Community", body:"Aylık ücret karşılığı özel Discord + canlı sohbet." },
+        { title:"Sürekli Güncelleme", body:"Aylık yeni içerik, aylık yeni şablon." },
+        { title:"Yazılım (SaaS)", body:"Kullanıcı hesabı + aylık ücret." },
+        { title:"Aylık Kutu", body:"Fiziksel ürünlerde 'kutulu abonelik' modeli." },
+        { title:"Newsletter Premium", body:"Ücretli haber bülteni; Substack, Beehiiv." },
+        { title:"Mentorluk Grubu", body:"Aylık ücret, aylık grup çağrısı." }
+      ]},
+      { type:"h", text:"Sadakat ve Elde Tutma" },
+      { type:"table",
+        headers:["Strateji","Amaç","Örnek"],
+        rows:[
+          ["Onboarding Serisi","İlk 7 gün başarısı","'İlk 24 saat rehberi'"],
+          ["Sürekli Değer","Her ay yeni bir kazanç","Aylık ekstra bonus"],
+          ["Community","Yalnız hissetmesin","Discord, Telegram, forum"],
+          ["Ödül Programı","Sadakati kutla","6. ay hediye, 12. ay upgrade"],
+          ["Kişisel Dokunuş","İnsan hissi","Doğum günü, isim, özel içerik"],
+          ["Çıkış Görüşmesi","İptal edeni geri kazan","Ücretsiz ay, düşük fiyatlı plan"]
+        ]
+      },
+      { type:"h", text:"Ölçekleme Sırasında Yapılan 5 Hata" },
+      { type:"prosncons",
+        pros:["Sistemli otomasyon → sanal asistan → freelance uzman sırası","Aynı üründe 3-basamaklı fiyatlandırma","Ürün merdiveni ile aynı müşteriye 3-4 kere satmak","MRR modeli için abonelik ekleme","LTV/CAC oranını >3× tutarak reklam bütçesi katlamak"],
+        cons:["Ölçek öncesi ürün validasyonu bitmemişken reklam katlamak","Kurucunun her işe müdahalesi devam etmesi","Tek trafik kanalına bağlı ölçek denemesi","Yeni ürün yığarak eskisini terk etmek","Ekip alıp iş süreçlerini yazmadan işe başlatmak"]
+      },
+      { type:"callout", title:"Kural · Sistem Kişiden Bağımsız Olmalı", text:"Otomatik gelir sisteminin gerçek testi kolay: <strong>siz 2 hafta izne çıksanız iş çalışmaya devam eder mi?</strong> Cevap 'hayır' ise 'iş' kurmuşsunuz, 'sistem' değil. Sistem = kişisel varlığınıza bağımlı olmayan yapı. Bu, ölçeğin gerçek anahtarıdır." },
+      { type:"h", text:"12 Aylık Ölçek Yol Haritası" },
+      { type:"steps", items:[
+        { title:"Ay 1-2 · Verimlilik", body:"Otomasyon, delegasyon, süreç yazımı." },
+        { title:"Ay 3-4 · Merdiven Kurma", body:"Trip wire, ana ürün, premium; 3 fiyatlı model." },
+        { title:"Ay 5-6 · Abonelik / MRR", body:"Community, aylık ödeme modeli test." },
+        { title:"Ay 7-8 · Trafik Çeşitlendirme", body:"3 kanal aktif hale getir." },
+        { title:"Ay 9-10 · Ücretli Reklam Ölçek", body:"Retargeting + lookalike + video reklam." },
+        { title:"Ay 11-12 · Ekip Yapılanma", body:"Sanal asistan, editör, kısmi ortak." }
+      ]},
+      { type:"h", text:"Sürdürülebilirlik · Tükenmişlik Önleme" },
+      { type:"p", text:"Sürdürülebilir olmayan ölçek, <strong>kurucunun tükenmişliğinde</strong> ölür. 'Sistem çalışıyor' hâline geldikçe, kurucu kendine daha az emek, daha çok strateji vaktine ayırmalı. Bu, otomatik gelirin verdiği <em>gerçek özgürlük</em>tür. Aksi hâlde daha büyük ama daha yorgun bir iş kurmuş olursunuz." },
+      { type:"vaka",
+        title:"Dijital Şablon Markası · 12 Ayda 4.000 TL'den 180.000 TL'ye",
+        baglam:"Marka 12 ay önce aylık 4.000 TL satan bir Notion şablonuyla başladı. Tek ürün, tek trafik kanalı (Instagram), tek kurucu.",
+        analiz:"XYZ modeli uygulandı: (X) TikTok + Pinterest + SEO ile trafik çeşitlendi, (Y) Trip wire (49 TL) → Ana paket (390 TL) → Premium bundle (990 TL) → Community abonelik (aylık 149 TL), (Z) Onboarding + aylık ekstra + community ile elde tutma. 8. ay: 2 sanal asistan, 1 video editörü.",
+        sonuc:"12. ay: aylık gelir 180.000 TL. Kurucu haftada 15 saat çalışıyor. MRR (abonelik geliri) toplam gelirin %35'i — öngörülebilirlik yüksek. Sistem gerçekten <em>otomatik ve ölçeklenebilir</em>."
+      },
+      { type:"callout", title:"Eğitim Özeti · Sistemin Sonu", text:"10 bölüm boyunca sadece bir 'gelir kanalı' değil — <strong>Otomatik Gelir Sistemi</strong> kurdunuz. Zihniyet → Model → Niş → Ürün → Huni → Trafik → E-mail → Sistem → Optimizasyon → Ölçek. Her katman bir öncekiyle bir sonrakini konuşturur. Sistem çalıştığında zaman ile para arasındaki bağ bozulur — özgürlüğe geçilir." },
+      { type:"takeaways", items:[
+        "Ölçek girdiyi sabit tutup çıktıyı katlamaktır — daha çok çalışmak değil.",
+        "Gelir = Müşteri × Sepet × Süre (XYZ); üç boyutu birlikte büyüt.",
+        "LTV > 3 × CAC ise reklam sürdürülebilir; altındaysa para yakma.",
+        "Aylık abonelik (MRR) tek satıştan ~10 kat daha güçlü gelir modelidir.",
+        "Sistem kurucudan bağımsız çalışamıyorsa henüz 'iş'tir, sistem değil.",
+        "Bu 10 bölümlük yol Otomatik Gelir'in tam anatomisidir."
+      ]}
+    ]
+  }
+];
+
+/* ============ Render ============ */
+const esc = (s) => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+function renderBlock(b) {
+  if (b.type === "h") return `<h3 class="ega-h3"><span class="ega-h3-bar"></span>${esc(b.text)}</h3>`;
+  if (b.type === "p") return `<p class="ega-p">${b.text}</p>`;
+  if (b.type === "callout") return `
+    <div class="ega-callout">
+      ${b.title ? `<div class="ega-callout-title">${esc(b.title)}</div>` : ""}
+      <div class="ega-callout-body">${b.text}</div>
+    </div>`;
+  if (b.type === "stats") return `
+    <div class="ega-stats">
+      ${b.items.map(it => `
+        <div class="ega-stat">
+          <div class="ega-stat-value">${esc(it.value)}</div>
+          <div class="ega-stat-label">${esc(it.label)}</div>
+        </div>`).join("")}
+    </div>`;
+  if (b.type === "cards") return `
+    <div class="ega-cards">
+      ${b.items.map((c, i) => `
+        <div class="ega-card">
+          <div class="ega-card-head">
+            <span class="ega-card-num">${String(i+1).padStart(2,"0")}</span>
+            <span class="ega-card-title">${esc(c.title)}</span>
+          </div>
+          <div class="ega-card-body">${esc(c.body)}</div>
+        </div>`).join("")}
+    </div>`;
+  if (b.type === "steps") return `
+    <div class="ega-steps">
+      ${b.items.map((s, i) => `
+        <div class="ega-step">
+          <div class="ega-step-num">${String(i+1).padStart(2,"0")}</div>
+          <div>
+            <div class="ega-step-title">${esc(s.title)}</div>
+            <div class="ega-step-body">${esc(s.body)}</div>
+          </div>
+        </div>`).join("")}
+    </div>`;
+  if (b.type === "table") {
+    const cols = b.headers.length;
+    const style = `grid-template-columns: repeat(${cols}, minmax(0,1fr));`;
+    return `
+    <div class="ega-table">
+      <div class="ega-table-row ega-table-head" style="${style}">
+        ${b.headers.map(h => `<div>${esc(h)}</div>`).join("")}
+      </div>
+      ${b.rows.map(row => `
+        <div class="ega-table-row" style="${style}">
+          ${row.map(c => `<div>${esc(c)}</div>`).join("")}
+        </div>`).join("")}
+    </div>`;
+  }
+  if (b.type === "prosncons" || b.type === "proscons") return `
+    <div class="ega-prosncons">
+      <div class="ega-pc">
+        <div class="ega-pc-title">Doğru Yaklaşımlar</div>
+        <ul>${b.pros.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      </div>
+      <div class="ega-pc con">
+        <div class="ega-pc-title">Yaygın Hatalar</div>
+        <ul>${b.cons.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      </div>
+    </div>`;
+  if (b.type === "vaka") return `
+    <div class="ega-vaka">
+      <div class="ega-vaka-label">Örnek Vaka</div>
+      <div class="ega-vaka-title">${esc(b.title)}</div>
+      <div class="ega-vaka-grid">
+        <div class="ega-vaka-col"><h5>Bağlam</h5><p>${esc(b.baglam)}</p></div>
+        <div class="ega-vaka-col"><h5>Analiz</h5><p>${esc(b.analiz)}</p></div>
+        <div class="ega-vaka-col"><h5>Sonuç</h5><p>${esc(b.sonuc)}</p></div>
+      </div>
+    </div>`;
+  if (b.type === "takeaways") return `
+    <div class="ega-takeaways">
+      <h4><span class="ega-h3-bar"></span>Temel Çıkarımlar</h4>
+      <ol>${b.items.map(t => `<li>${esc(t)}</li>`).join("")}</ol>
+    </div>`;
+  return "";
+}
+
+function renderHero(s) {
+  return `
+    <section class="ega-hero">
+      <div class="ega-hero-mark">Ek Gelir Akademi · Premium Edisyon</div>
+      <h1 class="ega-hero-title">Otomatik Gelir Sistemi: <em>Kur, Optimize Et, Büyüt</em></h1>
+      <p class="ega-hero-sub">Aktif gelirde saat başına para kazanırsınız; otomatik gelirde sistem başına para kazanırsınız. Bu 10 bölümlük eğitim; zihniyetten model seçimine, niş ve ürünlerden otomatik satış hunisine, trafik motorlarından e-mail otomasyonuna, ödeme sisteminden optimizasyon ve ölçeklemeye — zaman ile para arasındaki bağı kıran, uyurken de çalışan gerçek bir otomatik gelir sisteminin tam yol haritası.</p>
+      <div class="ega-hero-meta">
+        <span><strong>10</strong> Bölüm</span>
+        <span><strong>Premium</strong> Otomatik Gelir Eğitimi</span>
+        <span><strong>2026</strong> Türkiye Sürümü</span>
+      </div>
+      <div class="ega-hero-rule"></div>
+      <h3 class="ega-h3"><span class="ega-h3-bar"></span>İçindekiler</h3>
+      <div class="ega-toc">
+        ${s.toc.map((t, i) => `
+          <button class="ega-toc-item" data-jump="${i+1}">
+            <span class="ega-toc-num">${String(i+1).padStart(2,"0")}</span>
+            <span class="ega-toc-label">${esc(t)}</span>
+          </button>`).join("")}
+      </div>
+    </section>`;
+}
+
+function renderSection(s, idx) {
+  if (s.hero) return renderHero(s);
+  return `
+    <section class="ega-section">
+      <div class="ega-section-eyebrow">Bölüm ${String(idx).padStart(2,"0")} · Ek Gelir Akademi</div>
+      <h2 class="ega-section-title">${s.title}</h2>
+      ${s.lead ? `<p class="ega-section-lead">${esc(s.lead)}</p>` : ""}
+      ${(s.blocks || []).map(renderBlock).join("")}
+    </section>`;
+}
+
+/* ============ State + Events ============ */
+const state = { activeIndex: 0 };
+const $nav = document.getElementById("nav");
+const $container = document.getElementById("sectionContainer");
+const $scroll = document.getElementById("scroll");
+const $progress = document.getElementById("progressFill");
+const $progressMini = document.getElementById("progressMini");
+const $prev = document.getElementById("prevBtn");
+const $next = document.getElementById("nextBtn");
+const $prevLabel = document.getElementById("prevLabel");
+const $nextLabel = document.getElementById("nextLabel");
+const $count = document.getElementById("pagerCount");
+const $sidebar = document.getElementById("sidebar");
+const $menuToggle = document.getElementById("menuToggle");
+
+SECTIONS.forEach((s, i) => {
+  const btn = document.createElement("button");
+  btn.className = "ega-nav-item";
+  btn.dataset.idx = i;
+  btn.innerHTML = `<span class="num">${String(i+1).padStart(2,"0")}</span><span class="label">${esc(s.shortTitle)}</span>`;
+  btn.addEventListener("click", () => { setActive(i); $sidebar.classList.remove("open"); });
+  $nav.appendChild(btn);
+});
+
+function setActive(i) {
+  if (i < 0 || i >= SECTIONS.length) return;
+  state.activeIndex = i;
+  $container.innerHTML = renderSection(SECTIONS[i], i);
+  $container.querySelectorAll(".ega-toc-item").forEach(el => {
+    el.addEventListener("click", () => setActive(parseInt(el.dataset.jump, 10)));
+  });
+  document.querySelectorAll(".ega-nav-item").forEach((el, idx) => {
+    el.classList.toggle("active", idx === i);
+  });
+  const pct = ((i + 1) / SECTIONS.length) * 100;
+  $progress.style.width = pct + "%";
+  if ($progressMini) $progressMini.style.width = pct + "%";
+  $prev.disabled = (i === 0);
+  $next.disabled = (i === SECTIONS.length - 1);
+  $prevLabel.textContent = i > 0 ? SECTIONS[i - 1].shortTitle : "Başlangıç";
+  $nextLabel.textContent = i < SECTIONS.length - 1 ? SECTIONS[i + 1].shortTitle : "Son bölüm";
+  $count.textContent = `${String(i+1).padStart(2,"0")} / ${String(SECTIONS.length).padStart(2,"0")}`;
+  $scroll.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+$prev.addEventListener("click", () => setActive(state.activeIndex - 1));
+$next.addEventListener("click", () => setActive(state.activeIndex + 1));
+if ($menuToggle) $menuToggle.addEventListener("click", () => $sidebar.classList.toggle("open"));
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") setActive(state.activeIndex + 1);
+  if (e.key === "ArrowLeft") setActive(state.activeIndex - 1);
+});
+
+setActive(0);
+</script>
+</body>
+</html>
